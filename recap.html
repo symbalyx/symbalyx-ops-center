@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Récap — Ce que Hermes a fait pour Symbalyx</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#07070d;color:#e0e0e0;line-height:1.6}
+  .wrap{max-width:600px;margin:0 auto;padding:24px 16px}
+  h1{font-size:22px;font-weight:800;color:#ff6b35;margin-bottom:4px;letter-spacing:-.5px}
+  .sub{font-size:13px;color:#888;margin-bottom:24px}
+  .section{margin-bottom:20px}
+  .section-title{font-size:13px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #1a1a2e;display:flex;align-items:center;gap:8px}
+  .card{background:#12121f;border:1px solid #1a1a2e;border-radius:14px;padding:14px;margin-bottom:8px}
+  .card h3{font-size:14px;font-weight:600;color:#fff;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+  .card p{font-size:12px;color:#888;line-height:1.5}
+  .card .tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;margin-left:6px}
+  .tag.gold{background:#ff6b3522;color:#ff6b35}
+  .tag.green{background:#00c85322;color:#00c853}
+  .tag.blue{background:#2979ff22;color:#2979ff}
+  .tag.gray{background:#333;color:#888}
+  a{color:#ff6b35;text-decoration:none}
+  a:hover{text-decoration:underline}
+  .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+  .stat{background:#12121f;border:1px solid #1a1a2e;border-radius:12px;padding:14px;text-align:center}
+  .stat .num{font-size:28px;font-weight:800;color:#ff6b35}
+  .stat .label{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+  .banner{background:linear-gradient(135deg,#1a1a2e,#12121f);border:1px solid #ff6b3544;border-radius:16px;padding:20px;text-align:center;margin-bottom:20px}
+  .banner .big{font-size:32px;margin-bottom:4px}
+  .banner h2{font-size:18px;color:#fff;margin-bottom:4px}
+  .banner p{font-size:12px;color:#888}
+  .footer{text-align:center;font-size:11px;color:#444;padding:24px 0}
+  .divider{height:1px;background:#1a1a2e;margin:16px 0}
+  ul{list-style:none;margin:6px 0}
+  ul li{padding:3px 0;font-size:12px;color:#999;display:flex;align-items:center;gap:6px}
+  ul li::before{content:"✅";font-size:11px;opacity:.7}
+  @media(prefers-color-scheme:light){
+    body{background:#f4f4f0;color:#222}
+    .section-title{color:#000;border-color:#e0ddd5}
+    .card,.stat{background:#fff;border-color:#e0ddd5}
+    .card h3{color:#000}
+    .card p{color:#666}
+    .banner{background:linear-gradient(135deg,#fff3e0,#fff)}
+    .banner h2{color:#000}
+    ul li{color:#555}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="banner">
+  <div class="big">⚡</div>
+  <h2>Hermes × Symbalyx</h2>
+  <p>Rapport de mission — 31 mai → 1er juin 2026</p>
+</div>
+
+<div class="stat-grid">
+  <div class="stat"><div class="num">113</div><div class="label">Drafts Email</div></div>
+  <div class="stat"><div class="num">97</div><div class="label">Téléphones</div></div>
+  <div class="stat"><div class="num">7</div><div class="label">Pages Web</div></div>
+</div>
+
+<!-- ─── MON REPO DASHBOARD ─── -->
+<div class="section">
+  <div class="section-title">🔥 Mon Repo — symbalyx-ops-center</div>
+  <div class="card" style="border-color:#ff6b3544">
+    <h3>📊 Dashboard Operations Center</h3>
+    <p>Tableau de bord complet de pilotage : vue d'ensemble, briefing 500€, scripts d'appel avec erreurs détaillées, pipeline d'envoi, suivi des ventes (€), monitoring des réponses IMAP, top prospects, état système.</p>
+    <div style="margin-top:6px">
+      <span class="tag gold">Live</span>
+      <a href="https://symbalyx.github.io/symbalyx-ops-center/" style="font-size:12px">Ouvrir →</a>
+    </div>
+  </div>
+  <div class="card">
+    <h3>📝 Blog SEO — 9 articles</h3>
+    <p>Articles optimisés sur les thèmes : prix site vitrine, erreurs fatales, mobile-first, WordPress vs sur-mesure, prospection automatisée, etc.</p>
+    <div style="margin-top:6px">
+      <span class="tag green">Live</span>
+      <a href="https://symbalyx.github.io/symbalyx-ops-center/blog.html" style="font-size:12px">Voir le blog →</a>
+    </div>
+  </div>
+  <div class="card">
+    <h3>🎯 thank-you.html</h3>
+    <p>Page de remerciement après téléchargement du guide SEO. Upsell vers l'audit et les services.</p>
+    <div style="margin-top:6px">
+      <span class="tag green">Live</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── INFRASTRUCTURE MISE EN PLACE ─── -->
+<div class="section">
+  <div class="section-title">⚙️ Infrastructure construite</div>
+  <div class="card">
+    <h3>📧 Pipeline email automatisé</h3>
+    <ul>
+      <li>113 drafts PRO personnalisés avec RGPD</li>
+      <li>Envoi cron : 1 email / 30 min, 9h-17h UTC</li>
+      <li>16 emails/jour automatiquement</li>
+      <li>Séquence relance J+3 / J+7 / J+14</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>📬 Monitoring réponses IMAP → Telegram</h3>
+    <ul>
+      <li>Connexion IMAP Zoho Europe validée</li>
+      <li>Détection : STOP, INTÉRÊT (devis, combien, intéressé...), RÉPONSE</li>
+      <li>Notifications push sur Telegram en temps réel</li>
+      <li>Vérification toutes les 30 min</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>📞 Pipeline téléphonique</h3>
+    <ul>
+      <li>97 numéros extraits et validés</li>
+      <li>6 scripts d'appel par scénario d'erreur</li>
+      <li>SMS de relance automatiques</li>
+      <li>Dashboard avec appel en 1 clic</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>🌐 Pages web déployées</h3>
+    <ul>
+      <li><strong>symbalyx-leads/</strong> — Site de vente : audit, services, guide SEO, diagnostics</li>
+      <li><strong>symbalyx-ops-center/</strong> — Dashboard interne : pilotage, scripts, ventes, blog</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>🔧 Outils internes</h3>
+    <ul>
+      <li>security_audit.py — Scan sécurité 6 dimensions</li>
+      <li>audit_report.py — Rapport PDF 5 pages</li>
+      <li>sequence_engine.py — Moteur de relance multi-touch</li>
+      <li>send_one_email.js / send_with_tracking.js — Envoi SMTP</li>
+      <li>imap_alarm.py — Monitoring IMAP → Telegram</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ─── LIENS UTILES ─── -->
+<div class="section">
+  <div class="section-title">🔗 Liens rapides</div>
+  <div class="card">
+    <div style="display:grid;gap:6px">
+      <a href="https://symbalyx.github.io/symbalyx-ops-center/" style="display:flex;gap:10px;padding:8px;background:#090914;border-radius:8px;align-items:center">
+        <span style="font-size:16px;width:24px;text-align:center">📊</span>
+        <span style="flex:1;font-size:13px;color:#fff">Dashboard — Pilotage complet</span>
+        <span class="tag green">Live</span>
+      </a>
+      <a href="https://symbalyx.github.io/symbalyx-ops-center/blog.html" style="display:flex;gap:10px;padding:8px;background:#090914;border-radius:8px;align-items:center">
+        <span style="font-size:16px;width:24px;text-align:center">📝</span>
+        <span style="flex:1;font-size:13px;color:#fff">Blog SEO — 9 articles</span>
+        <span class="tag green">Live</span>
+      </a>
+      <a href="https://symbalyx.github.io/symbalyx-leads/" style="display:flex;gap:10px;padding:8px;background:#090914;border-radius:8px;align-items:center">
+        <span style="font-size:16px;width:24px;text-align:center">🌐</span>
+        <span style="flex:1;font-size:13px;color:#fff">Symbalyx Leads — Pages de vente</span>
+        <span class="tag green">Live</span>
+      </a>
+      <a href="https://symbalyx.github.io/symbalyx-leads/audit.html" style="display:flex;gap:10px;padding:8px;background:#090914;border-radius:8px;align-items:center">
+        <span style="font-size:16px;width:24px;text-align:center">🔍</span>
+        <span style="flex:1;font-size:13px;color:#fff">Audit site gratuit</span>
+        <span class="tag green">Live</span>
+      </a>
+      <a href="https://github.com/symbalyx/symbalyx-ops-center" style="display:flex;gap:10px;padding:8px;background:#090914;border-radius:8px;align-items:center">
+        <span style="font-size:16px;width:24px;text-align:center">📂</span>
+        <span style="flex:1;font-size:13px;color:#fff">Mon repo GitHub — symbalyx-ops-center</span>
+        <span class="tag blue">Code</span>
+      </a>
+      <a href="https://github.com/symbalyx/symbalyx-leads" style="display:flex;gap:10px;padding:8px;background:#090914;border-radius:8px;align-items:center">
+        <span style="font-size:16px;width:24px;text-align:center">📂</span>
+        <span style="flex:1;font-size:13px;color:#fff">Ton repo — symbalyx-leads</span>
+        <span class="tag blue">Code</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PROCHAINES ACTIONS ─── -->
+<div class="section">
+  <div class="section-title">🎯 Prochaines actions</div>
+  <div class="card" style="border-color:var(--green-dim)">
+    <h3>Aujourd'hui (1er juin)</h3>
+    <ul>
+      <li>16 emails automatiques entre 11h et 18h30</li>
+      <li>Appelle 15 prospects avec le dashboard et les scripts</li>
+      <li>Quand tu vends → clique +99€ dans le dashboard</li>
+      <li>Les réponses IMAP arrivent ici sur Telegram</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  Construit par Hermes Agent · 1er juin 2026<br>
+  <a href="https://github.com/symbalyx/symbalyx-ops-center">github.com/symbalyx/symbalyx-ops-center</a>
+</div>
+
+</div>
+</body>
+</html>
