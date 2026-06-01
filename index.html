@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>SYMBALYX · Operations Center</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<style>
+  /* ─── RESET & BASE ─── */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #07070d; --surface: #0d0d18; --card: #12121f; --border: #1a1a2e;
+    --gold: #ff6b35; --gold-dim: #ff6b3522; --green: #00c853; --green-dim: #00c85322;
+    --blue: #2979ff; --blue-dim: #2979ff22; --red: #ff1744; --text: #e0e0e0;
+    --muted: #555; --dim: #888;
+    --radius: 16px; --radius-sm: 10px;
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
+  ::selection { background: var(--gold-dim); color: var(--gold); }
+
+  /* ─── LAYOUT ─── */
+  .app { display: flex; min-height: 100vh; }
+  .nav { width: 240px; background: var(--surface); border-right: 1px solid var(--border); padding: 20px 0; position: fixed; top: 0; left: 0; height: 100vh; overflow-y: auto; z-index: 100; }
+  .main { flex: 1; margin-left: 240px; padding: 24px 32px; max-width: 1100px; }
+
+  /* ─── NAV ─── */
+  .nav-logo { padding: 0 20px 20px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
+  .nav-logo h1 { font-size: 18px; font-weight: 800; color: var(--gold); letter-spacing: -0.5px; }
+  .nav-logo p { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 20px; color: var(--dim); text-decoration: none; font-size: 13px; font-weight: 500; transition: all 0.12s; border-left: 3px solid transparent; }
+  .nav-item:hover { background: var(--card); color: var(--text); }
+  .nav-item.active { color: var(--gold); border-left-color: var(--gold); background: linear-gradient(90deg, var(--gold-dim), transparent); }
+  .nav-item .icon { font-size: 16px; width: 20px; text-align: center; }
+  .nav-item .badge { margin-left: auto; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 100px; }
+  .nav-item .badge.gold { background: var(--gold-dim); color: var(--gold); }
+  .nav-item .badge.green { background: var(--green-dim); color: var(--green); }
+  .nav-item .badge.blue { background: var(--blue-dim); color: var(--blue); }
+  .nav-section { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); padding: 16px 20px 6px; font-weight: 700; }
+
+  /* ─── HAMBURGER ─── */
+  .hamburger { display: none; position: fixed; top: 12px; left: 12px; z-index: 200; width: 40px; height: 40px; border-radius: 10px; background: var(--card); border: 1px solid var(--border); color: var(--text); font-size: 18px; cursor: pointer; align-items: center; justify-content: center; }
+  .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 99; }
+
+  /* ─── PAGE SECTIONS ─── */
+  .page { display: none; }
+  .page.active { display: block; animation: fadeIn 0.2s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .page-header { margin-bottom: 24px; }
+  .page-header h2 { font-size: 22px; font-weight: 700; color: #fff; }
+  .page-header p { font-size: 13px; color: var(--dim); margin-top: 4px; }
+
+  /* ─── CARDS ─── */
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 12px; }
+  .card-header { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+  .card-header .emoji { font-size: 16px; }
+  .card.gold { border-color: var(--gold-dim); }
+  .card.green { border-color: var(--green-dim); }
+  .card.blue { border-color: var(--blue-dim); }
+
+  /* ─── STATS GRID ─── */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; margin-bottom: 20px; }
+  .stat { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 12px; text-align: center; }
+  .stat .num { font-size: 26px; font-weight: 800; color: #fff; }
+  .stat .num.gold { color: var(--gold); }
+  .stat .num.green { color: var(--green); }
+  .stat .num.blue { color: var(--blue); }
+  .stat .label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+  /* ─── PROGRESS BAR ─── */
+  .progress-wrap { background: var(--border); border-radius: 100px; height: 8px; overflow: hidden; margin: 8px 0; }
+  .progress-bar { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--gold), #ff8a50); transition: width 0.5s; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--dim); }
+
+  /* ─── SCRIPTS ─── */
+  .script { background: #090914; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 10px; }
+  .script .meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .script .meta .tag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 100px; background: var(--gold-dim); color: var(--gold); text-transform: uppercase; }
+  .script .meta .time { font-size: 11px; color: var(--muted); }
+  .script .lines { font-size: 13px; line-height: 1.6; color: #bbb; }
+  .script .lines .you { color: var(--gold); font-weight: 500; }
+  .script .lines .them { color: var(--blue); }
+  .script .lines .note { color: var(--muted); font-style: italic; font-size: 12px; }
+  .script .lines .step { color: var(--green); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin: 10px 0 4px; }
+
+  /* ─── TIMELINE ─── */
+  .tl { position: relative; padding-left: 24px; }
+  .tl::before { content: ''; position: absolute; left: 8px; top: 4px; bottom: 4px; width: 2px; background: var(--border); }
+  .tl-item { position: relative; padding-bottom: 18px; }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-item::before { content: ''; position: absolute; left: -18px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--gold); border: 2px solid var(--bg); }
+  .tl-item.done::before { background: var(--green); }
+  .tl-item.fail::before { background: var(--red); }
+  .tl-item .tl-date { font-size: 10px; color: var(--muted); }
+  .tl-item .tl-title { font-size: 13px; font-weight: 600; color: #ddd; }
+  .tl-item .tl-desc { font-size: 12px; color: var(--dim); margin-top: 2px; }
+
+  /* ─── TABLE ─── */
+  .table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .table th { text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); padding: 8px 10px; border-bottom: 1px solid var(--border); font-weight: 600; }
+  .table td { padding: 10px; border-bottom: 1px solid var(--border); color: #ccc; }
+  .table tr:last-child td { border: none; }
+  .table .score { font-weight: 700; color: var(--gold); }
+  .table .status-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 100px; display: inline-block; }
+  .status-badge.sent { background: var(--green-dim); color: var(--green); }
+  .status-badge.pending { background: var(--gold-dim); color: var(--gold); }
+  .status-badge.waiting { background: var(--blue-dim); color: var(--blue); }
+
+  /* ─── PRICE CARDS ─── */
+  .prices { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 8px; }
+  .price-card { background: #090914; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; text-align: center; }
+  .price-card .price { font-size: 22px; font-weight: 800; color: var(--gold); }
+  .price-card .label { font-size: 12px; color: var(--dim); margin-top: 2px; }
+
+  /* ─── PROSPECT CARDS ─── */
+  .prospect { display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+  .prospect:last-child { border: none; }
+  .prospect .info { flex: 1; min-width: 0; }
+  .prospect .info .name { font-size: 14px; font-weight: 600; color: #fff; }
+  .prospect .info .site { font-size: 12px; color: var(--gold); text-decoration: none; }
+  .prospect .info .tags { margin-top: 4px; }
+  .prospect .info .tags span { font-size: 10px; padding: 1px 6px; border-radius: 100px; margin-right: 4px; background: var(--border); color: var(--dim); }
+  .prospect .actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .prospect .actions a { display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 600; text-decoration: none; transition: all 0.12s; }
+  .prospect .actions .call { background: var(--green-dim); color: var(--green); }
+  .prospect .actions .mail { background: var(--blue-dim); color: var(--blue); }
+  .prospect .actions .site { background: var(--gold-dim); color: var(--gold); }
+  .prospect .actions a:active { transform: scale(0.95); }
+
+  /* ─── BUTTONS ─── */
+  .btn { display: inline-block; padding: 10px 20px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.12s; border: none; cursor: pointer; }
+  .btn:active { transform: scale(0.97); }
+  .btn-gold { background: var(--gold); color: #fff; }
+  .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--dim); }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-sm { padding: 6px 12px; font-size: 12px; }
+
+  /* ─── MISC ─── */
+  .flex { display: flex; gap: 12px; flex-wrap: wrap; }
+  .flex-center { align-items: center; }
+  .gap-4 { gap: 4px; }
+  .mt-8 { margin-top: 8px; }
+  .mb-8 { margin-bottom: 8px; }
+  .text-muted { color: var(--muted); }
+  .text-gold { color: var(--gold); }
+  .text-green { color: var(--green); }
+  .text-center { text-align: center; }
+  .divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .hamburger { display: flex; }
+    .overlay.show { display: block; }
+    .nav { transform: translateX(-100%); transition: transform 0.25s ease; }
+    .nav.open { transform: translateX(0); }
+    .main { margin-left: 0; padding: 16px; padding-top: 60px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .prices { grid-template-columns: repeat(2, 1fr); }
+    .prospect { flex-direction: column; }
+    .prospect .actions { flex-wrap: wrap; }
+  }
+  @media (max-width: 480px) {
+    .stats { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+    .stat { padding: 10px 8px; }
+    .stat .num { font-size: 20px; }
+    .prices { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ─── LIGHT MODE ─── */
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f4f4f0; --surface: #fff; --card: #fff; --border: #e0ddd5;
+      --text: #222; --dim: #666; --muted: #999;
+    }
+    .nav-logo { border-color: var(--border); }
+    .nav-item:hover { background: #f8f8f4; }
+    .nav-item.active { background: linear-gradient(90deg, #fff3e0, transparent); }
+    .stat { background: #fff; }
+    .stat .num { color: #000; }
+    .script { background: #fafaf7; }
+    .page-header h2 { color: #000; }
+    .prospect .info .name { color: #000; }
+    .table td { color: #444; }
+    .tl-item::before { border-color: var(--bg); }
+  }
+</style>
+</head>
+<body>
+
+<!-- HAMBURGER -->
+<button class="hamburger" onclick="toggleNav()">☰</button>
+<div class="overlay" id="overlay" onclick="toggleNav()"></div>
+
+<!-- ─── NAV ─── -->
+<nav class="nav" id="nav">
+  <div class="nav-logo">
+    <h1>⚡ SYMBALYX</h1>
+    <p>Operations Center</p>
+    <div class="progress-wrap" style="margin-top:12px;height:4px">
+      <div class="progress-bar" style="width:12%" id="navProgress"></div>
+    </div>
+    <div class="progress-label" style="font-size:10px;margin-top:2px">
+      <span>€0</span>
+      <span>Objectif €500</span>
+    </div>
+  </div>
+
+  <div class="nav-section">Navigation</div>
+  <a href="#" class="nav-item active" data-page="overview" onclick="showPage('overview',this)">
+    <span class="icon">📊</span> Vue d'ensemble
+  </a>
+  <a href="#" class="nav-item" data-page="briefing" onclick="showPage('briefing',this)">
+    <span class="icon">🎯</span> Briefing 500€
+    <span class="badge gold">Priorité</span>
+  </a>
+  <a href="#" class="nav-item" data-page="scripts" onclick="showPage('scripts',this)">
+    <span class="icon">📞</span> Scripts d'appel
+    <span class="badge green">97 prospects</span>
+  </a>
+  <a href="#" class="nav-item" data-page="pipeline" onclick="showPage('pipeline',this)">
+    <span class="icon">📋</span> Pipeline
+    <span class="badge blue">2/113</span>
+  </a>
+  <a href="#" class="nav-item" data-page="services" onclick="showPage('services',this)">
+    <span class="icon">🛠️</span> Services & Tarifs
+  </a>
+  <a href="#" class="nav-item" data-page="prospects" onclick="showPage('prospects',this)">
+    <span class="icon">👥</span> Top Prospects
+  </a>
+  <a href="#" class="nav-item" data-page="ressources" onclick="showPage('ressources',this)">
+    <span class="icon">🔗</span> Ressources
+  </a>
+  <div class="nav-section" style="margin-top:20px">Système</div>
+  <a href="#" class="nav-item" data-page="system" onclick="showPage('system',this)">
+    <span class="icon">⚙️</span> État système
+  </a>
+</nav>
+
+<!-- ─── MAIN ─── -->
+<div class="main">
+
+<!-- ═══════════════════════ OVERVIEW ═══════════════════════ -->
+<div class="page active" id="page-overview">
+  <div class="page-header">
+    <h2>📊 Vue d'ensemble</h2>
+    <p>Objectif : 500€ — 1er juin 2026</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="num gold">113</div><div class="label">Drafts Email</div></div>
+    <div class="stat"><div class="num">97</div><div class="label">Téléphones</div></div>
+    <div class="stat"><div class="num green">16</div><div class="label">Envois / jour</div></div>
+    <div class="stat"><div class="num blue">7</div><div class="label">Pages Web</div></div>
+    <div class="stat"><div class="num">5</div><div class="label">Services</div></div>
+    <div class="stat"><div class="num gold">4</div><div class="label">Crons Actifs</div></div>
+  </div>
+
+  <div class="card gold">
+    <div class="card-header"><span class="emoji">🔥</span> Objectif 500€ — Plan d'attaque</div>
+    <div class="progress-wrap" style="height:12px">
+      <div class="progress-bar" style="width:0%"></div>
+    </div>
+    <div class="progress-label"><span>€0 encaissé</span><span>€500 objectif</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
+      <div style="background:#090914;border-radius:10px;padding:12px;text-align:center">
+        <div style="font-size:20px;font-weight:800;color:var(--green)">€297</div>
+        <div style="font-size:11px;color:var(--dim)">Jour 1 (15 appels → 3 correctifs 99€)</div>
+      </div>
+      <div style="background:#090914;border-radius:10px;padding:12px;text-align:center">
+        <div style="font-size:20px;font-weight:800;color:var(--gold)">€1 440</div>
+        <div style="font-size:11px;color:var(--dim)">Semaine 1 (80 appels → 10 correctifs + 3 maintenances + 1 site)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="emoji">📅</span> Timeline des réalisations</div>
+    <div class="tl">
+      <div class="tl-item done">
+        <div class="tl-date">Phase 1</div>
+        <div class="tl-title">🔍 Analyse — 28 prospects CRM, scoring, audit</div>
+      </div>
+      <div class="tl-item done">
+        <div class="tl-date">Phase 2</div>
+        <div class="tl-title">📧 Infrastructure email — Zoho SMTP, 113 drafts PRO</div>
+      </div>
+      <div class="tl-item done">
+        <div class="tl-date">Phase 3</div>
+        <div class="tl-title">🤖 Automatisation — Cron 1 email/30min, séquence relance J+3/J+7/J+14</div>
+      </div>
+      <div class="tl-item done">
+        <div class="tl-date">Phase 4</div>
+        <div class="tl-title">🌐 Landing Pages — Guide SEO, audit tool, services, thank-you</div>
+      </div>
+      <div class="tl-item done">
+        <div class="tl-date">Phase 5</div>
+        <div class="tl-title">📝 Blog SEO — 9 articles optimisés, live sur GitHub Pages</div>
+      </div>
+      <div class="tl-item done">
+        <div class="tl-date">Phase 6</div>
+        <div class="tl-title">📞 Pipeline téléphonique — 97 numéros, scripts appel, dashboard</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Phase 7 — AUJOURD'HUI</div>
+        <div class="tl-title">💰 Encaisser les premiers 500€ — Appels + relances + suivi</div>
+        <div class="tl-desc">16 emails partent aujourd'hui · Tu appelles 15 prospects · On track les réponses IMAP</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ BRIEFING 500€ ═══════════════════════ -->
+<div class="page" id="page-briefing">
+  <div class="page-header">
+    <h2>🎯 Briefing 500€</h2>
+    <p>Le plan pour encaisser 500€ cette semaine — étape par étape</p>
+  </div>
+
+  <div class="card gold">
+    <div class="card-header"><span class="emoji">🎯</span> Objectif : 500€ en 7 jours</div>
+    <p style="font-size:13px;color:#bbb;line-height:1.6">
+      <strong style="color:#fff;">Stratégie :</strong> Appels téléphoniques en priorité.<br>
+      Un appel de 5 min convertit 10x mieux qu'un email. Le dashboard tél est prêt, les scripts sont ci-dessous.<br><br>
+      <strong style="color:#fff;">Les 3 leviers :</strong>
+    </p>
+    <div style="display:grid;gap:8px;margin-top:8px">
+      <div style="background:#090914;border-radius:10px;padding:12px;display:flex;gap:10px;align-items:flex-start">
+        <div style="font-size:24px">📞</div>
+        <div>
+          <div style="font-weight:700;color:#fff;font-size:14px">15 appels/jour → 297€</div>
+          <div style="font-size:12px;color:var(--dim)">Correctif Express 99€. Durée : 5 min. 3 ventes sur 15 appels = 297€.</div>
+        </div>
+      </div>
+      <div style="background:#090914;border-radius:10px;padding:12px;display:flex;gap:10px;align-items:flex-start">
+        <div style="font-size:24px">📧</div>
+        <div>
+          <div style="font-weight:700;color:#fff;font-size:14px">16 emails/jour → réponses entrantes</div>
+          <div style="font-size:12px;color:var(--dim)">Les emails partent automatiquement. Tu réponds aux intéressés. Objectif : 1-2 rdv/semaine.</div>
+        </div>
+      </div>
+      <div style="background:#090914;border-radius:10px;padding:12px;display:flex;gap:10px;align-items:flex-start">
+        <div style="font-size:24px">🌐</div>
+        <div>
+          <div style="font-weight:700;color:#fff;font-size:14px">Audit en self-service 29€</div>
+          <div style="font-size:12px;color:var(--dim)">Les prospects visitent le site, paient 29€, reçoivent un rapport. Revenu passif.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="emoji">📋</span> Plan d'action — Jour par jour</div>
+    <div class="table-wrap">
+      <table class="table">
+        <tr><th>Jour</th><th>Action</th><th>Objectif €</th><th>Statut</th></tr>
+        <tr><td><strong>Lun</strong></td><td>16 emails auto + 15 appels (correctifs 99€)</td><td>€297</td><td><span class="status-badge pending">▶️ Aujourd'hui</span></td></tr>
+        <tr><td><strong>Mar</strong></td><td>16 emails + 15 appels + relances J+3</td><td>€200</td><td><span class="status-badge pending">Planifié</span></td></tr>
+        <tr><td><strong>Mer</strong></td><td>16 emails + 15 appels + suivi réponses</td><td>€150</td><td><span class="status-badge pending">Planifié</span></td></tr>
+        <tr><td><strong>Jeu</strong></td><td>16 emails + relances J+7 + 10 appels</td><td>€300</td><td><span class="status-badge pending">Planifié</span></td></tr>
+        <tr><td><strong>Ven</strong></td><td>Rélances breakups + clôture semaines</td><td>€150</td><td><span class="status-badge pending">Planifié</span></td></tr>
+        <tr><td colspan="2" style="text-align:right"><strong>Total objectif semaine</strong></td><td><strong class="text-gold">€1 097</strong></td><td></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card blue">
+    <div class="card-header"><span class="emoji">💡</span> Script de pitch téléphonique (15 sec)</div>
+    <p style="font-size:13px;color:#bbb;line-height:1.6">
+      <strong style="color:#fff;">"Bonjour [Nom], c'est Arsène de Symbalyx. Je suis passé sur votre site tout à l'heure — je peux vous montrer un truc qui cloche en 30 secondes, vous êtes au téléphone ?"</strong>
+    </p>
+    <p class="text-muted" style="font-size:12px;margin-top:8px">
+      Si pas dispo → "Pas de souci, je vous envoie une analyse par email. Vous avez 30 secondes ?" → envoie correction.html par SMS
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════ SCRIPTS APPEL ═══════════════════════ -->
+<div class="page" id="page-scripts">
+  <div class="page-header">
+    <h2>📞 Scripts d'appel</h2>
+    <p>97 prospects prêts à appeler — scripts par secteur, clique sur le numéro pour lancer l'appel</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
+    <a href="tel:+33500000000" class="card green" style="text-decoration:none;display:block;text-align:center;padding:16px">
+      <div style="font-size:28px">📞</div>
+      <div style="font-weight:700;color:#fff;font-size:16px">Lancer un appel</div>
+      <div style="font-size:12px;color:var(--dim)">Ouvre le téléphone — compose manuellement</div>
+    </a>
+    <a href="https://symbalyx.github.io/symbalyx-leads/correction.html" class="card blue" style="text-decoration:none;display:block;text-align:center;padding:16px">
+      <div style="font-size:28px">🔍</div>
+      <div style="font-weight:700;color:#fff;font-size:16px">Diagnostics en direct</div>
+      <div style="font-size:12px;color:var(--dim)">Envoie ce lien par SMS pendant l'appel</div>
+    </a>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="emoji">🛠️</span> Script — Artisans & Commerces (plombier, électricien, boulanger...)</div>
+    <div class="script">
+      <div class="lines">
+        <span class="step">🎯 Objectif : Correctif Express 99€</span>
+        <span class="you">Vous :</span> "<span class="them">Bonjour [Nom], c'est Arsène de Symbalyx. Je suis passé sur votre site tout à l'heure, je suis tombé dessus en cherchant [service] sur Bordeaux. Je peux vous montrer un truc qui cloche en 30 secondes ?</span>"
+        <div class="note">→ Il dit oui 80% du temps si c'est bien enchaîné</div>
+        <span class="step">🔍 Phase démo (30 sec)</span>
+        <span class="you">Vous :</span> "<span class="them">Tenez, regardez — quand on arrive sur votre site sur mobile, [problème spécifique]. Et puis Google affiche [observation]. Vous voyez ce que je veux dire ?</span>"
+        <span class="step">💰 Proposition</span>
+        <span class="you">Vous :</span> "<span class="them">Je peux corriger ça aujourd'hui — c'est 99€, je vous envoie la correction dans la journée. Et si le site a d'autres problèmes, on fait un audit rapide offert. Ça marche ?</span>"
+        <span class="step">⏰ Si pas disponible</span>
+        <span class="you">Vous :</span> "<span class="them">Pas de souci, je vous envoie le diagnostic par SMS comme ça vous regardez. Et je repasse dans 2 jours ?</span>"
+        <div class="note">→ Envoie https://symbalyx.github.io/symbalyx-leads/correction.html par SMS</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="emoji">🍽️</span> Script — Restaurants, Bars, Hôtels</div>
+    <div class="script">
+      <div class="lines">
+        <span class="step">🎯 Objectif : Pack Présence 149€/mois</span>
+        <span class="you">Vous :</span> "<span class="them">Bonjour [Nom], Arsène de Symbalyx. J'ai vu votre resto sur Google — belle carte ! Par contre votre site ne permet pas de réserver en ligne, c'est voulu ?</span>"
+        <span class="note">→ Accroche : la perte de chiffre d'affaires (réservations)</span>
+        <span class="step">💰 Proposition</span>
+        <span class="you">Vous :</span> "<span class="them">On a un pack à 149€/mois qui inclut le site + réservation en ligne + visibilité Google. Je peux vous montrer le template en 5 min si vous avez un moment.</span>"
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="emoji">💼</span> Script — Professions libérales (avocat, architecte, coach, kiné)</div>
+    <div class="script">
+      <div class="lines">
+        <span class="step">🎯 Objectif : Site Starter 450€ + Maintenance 99€/mois</span>
+        <span class="you">Vous :</span> "<span class="them">Bonjour [Nom], Arsène de Symbalyx. Je cherchais un [profession] sur Bordeaux et je suis tombé sur votre site. Vous avez un blog ou des articles ? Parce que Google ne vous remonte pas sur [mot-clé].</span>"
+        <span class="step">💰 Proposition</span>
+        <span class="you">Vous :</span> "<span class="them">Je peux vous faire un site vitrine optimisé SEO, avec un blog pour vos articles, le tout pour 450€ + 99€/mois de maintenance et hébergement. Ça vous intéresse qu'on en parle 10 min ?</span>"
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="emoji">🏪</span> Script — Site WordPress avec failles de sécurité</div>
+    <div class="script">
+      <div class="lines">
+        <span class="step">🎯 Objectif : Correctif Express 99€ + Audit sécurité gratuit</span>
+        <span class="you">Vous :</span> "<span class="them">Bonjour [Nom], Arsène de Symbalyx — on est spécialisé WordPress à Bordeaux. Je suis passé sur votre site et j'ai vu que votre version WP n'est plus à jour, ce qui crée des failles de sécurité. Vous avez quelqu'un qui s'en occupe ?</span>"
+        <span class="note">→ Leur faire peur un peu (piratage = site down, perte de clients)</span>
+        <span class="step">💰 Proposition</span>
+        <span class="you">Vous :</span> "<span class="them">Je peux corriger les failles critiques aujourd'hui — 99€, vous dormez tranquille. Et on en profite pour faire un audit complet offert. Je vous envoie le rapport dans 2h.</span>"
+        <span class="step">📱 SMS à envoyer après appel</span>
+        <div class="note">"[Nom], voici le lien vers votre diagnostic : https://symbalyx.github.io/symbalyx-leads/correction.html — je vous rappelle [jour] pour en parler. Arsène — Symbalyx"</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="emoji">📱</span> Script — Relance SMS après appel</div>
+    <div class="script">
+      <div class="lines">
+        <span class="step">📱 SMS J+1</span>
+        <div class="note">"[Nom], c'est Arsène de Symbalyx — suite à notre échange, voici le lien pour voir les points d'amélioration de votre site : https://symbalyx.github.io/symbalyx-leads/correction.html. Bonne journée !"</div>
+        <span class="step">📱 SMS J+3 si pas de réponse</span>
+        <div class="note">"[Nom], petit message pour vous rappeler que le diagnostic de votre site est prêt ici : https://symbalyx.github.io/symbalyx-leads/correction.html. Je reste disponible si vous voulez qu'on en parle 5 min."</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ PIPELINE ═══════════════════════ -->
+<div class="page" id="page-pipeline">
+  <div class="page-header">
+    <h2>📋 Pipeline</h2>
+    <p>Suivi en temps réel de la campagne</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="num blue">2</div><div class="label">Emails envoyés</div></div>
+    <div class="stat"><div class="num">0</div><div class="label">Réponses</div></div>
+    <div class="stat"><div class="num gold">16</div><div class="label">Aujourd'hui</div></div>
+    <div class="stat"><div class="num">0</div><div class="label">Rendez-vous</div></div>
+  </div>
+
+  <div class="card gold">
+    <div class="card-header"><span class="emoji">📤</span> Prochains envois aujourd'hui</div>
+    <div class="table-wrap">
+      <table class="table">
+        <tr><th>Heure</th><th>Prospect</th><th>Sujet</th><th>Statut</th></tr>
+        <tr><td>11h00</td><td>Mariage de Fleurs</td><td>Sécurité WordPress</td><td><span class="status-badge pending">⏳ À venir</span></td></tr>
+        <tr><td>11h30</td><td>Boulangerie [draft 003]</td><td>—</td><td><span class="status-badge pending">⏳ À venir</span></td></tr>
+        <tr><td>12h00</td><td>Draft 004</td><td>—</td><td><span class="status-badge pending">⏳ À venir</span></td></tr>
+        <tr><td>12h30</td><td>Draft 005</td><td>—</td><td><span class="status-badge pending">⏳ À venir</span></td></tr>
+        <tr><td>13h00</td><td>Draft 006</td><td>—</td><td><span class="status-badge pending">⏳ À venir</span></td></tr>
+        <tr><td>…</td><td colspan="3" class="text-muted">16 envois programmés entre 11h et 18h30</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="emoji">📬</span> Suivi des réponses (IMAP monitoring)</div>
+    <p class="text-muted" style="font-size:13px">
+      Le monitoring IMAP vérifie la boîte toutes les 30 min. Les réponses "STOP" sont automatiquement enregistrées, les "Intérêt" sont signalées immédiatement.
+    </p>
+    <div style="background:#090914;border-radius:10px;padding:16px;margin-top:8px;text-align:center">
+      <div style="font-size:36px">📭</div>
+      <div style="font-size:14px;color:var(--dim);margin-top:4px">Aucune réponse pour l'instant</div>
+      <div class="text-muted" style="font-size:11px;margin-top:2px">Dernière vérification : aujourd'hui à 08h05</div>
+    </div>
+  </div>
+
+  <div class="card blue">
+    <div class="card-header"><span class="emoji">🔄</span> Prochaines relances automatiques</div>
+    <div class="table-wrap">
+      <table class="table">
+        <tr><th>Prospect</th><th>Date envoi</th><th>J+3 relance</th><th>J+7 valeur</th><th>J+14 breakup</th></tr>
+        <tr><td>Les Filles Les Fleurs</td><td>31 mai</td><td>3 juin</td><td>7 juin</td><td>14 juin</td></tr>
+        <tr><td>Mariage de Fleurs</td><td>Aujourd'hui</td><td>4 juin</td><td>8 juin</td><td>15 juin</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ SERVICES ═══════════════════════ -->
+<div class="page" id="page-services">
+  <div class="page-header">
+    <h2>🛠️ Services & Tarifs</h2>
+    <p>5 offres pour convertir au téléphone</p>
+  </div>
+
+  <div class="prices">
+    <div class="price-card" style="border-color:var(--green-dim)">
+      <div style="font-size:28px">🔧</div>
+      <div class="price">99€</div>
+      <div class="label">Correctif Express</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px">Correction faille ou bug. Livré en 24h. <strong style="color:#fff">LE PRODUIT D'APPEL</strong></div>
+    </div>
+    <div class="price-card" style="border-color:var(--blue-dim)">
+      <div style="font-size:28px">📊</div>
+      <div class="price">29€</div>
+      <div class="label">Audit Sécurité</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px">Rapport PDF 5 pages. Self-service ou offert en appel.</div>
+    </div>
+    <div class="price-card" style="border-color:var(--gold-dim)">
+      <div style="font-size:28px">🌐</div>
+      <div class="price">450€</div>
+      <div class="label">Site Starter</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px">Site vitrine 3-5 pages, responsive, SEO. Livré en 7 jours.</div>
+    </div>
+    <div class="price-card">
+      <div style="font-size:28px">♻️</div>
+      <div class="price">99€/mois</div>
+      <div class="label">Maintenance</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px">Mises à jour, sécurité, backups, uptime. Revenu récurrent.</div>
+    </div>
+    <div class="price-card" style="grid-column:span 2">
+      <div style="font-size:28px">🚀</div>
+      <div class="price">149€/mois</div>
+      <div class="label">Pack Présence</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px">Site + Google My Business + réseaux sociaux. Solution clé en main pour les commerçants.</div>
+    </div>
+  </div>
+
+  <div class="card green" style="margin-top:12px">
+    <div class="card-header"><span class="emoji">💰</span> Projection — Scénario Semaine 1</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+      <div style="background:#090914;border-radius:10px;padding:12px">
+        <div style="font-size:12px;color:var(--dim)">Correctifs 99€</div>
+        <div style="font-size:20px;font-weight:800;color:var(--green)">10 × 99€ = 990€</div>
+        <div style="font-size:11px;color:var(--muted)">1 appel/5 prospects convertit → 15 appels/jour × 5 jours</div>
+      </div>
+      <div style="background:#090914;border-radius:10px;padding:12px">
+        <div style="font-size:12px;color:var(--dim)">Maintenances 99€/mois</div>
+        <div style="font-size:20px;font-weight:800;color:var(--gold)">3 × 99€ = 297€/mois</div>
+        <div style="font-size:11px;color:var(--muted)">⟳ Récurrent — encaissé chaque mois sans rien faire</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ PROSPECTS ═══════════════════════ -->
+<div class="page" id="page-prospects">
+  <div class="page-header">
+    <h2>👥 Top Prospects</h2>
+    <p>97 prospects qualifiés, triés par priorité — à appeler en premier</p>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="emoji">🏆</span> Top 10 — Appeler en premier</div>
+    <div style="margin-bottom:12px">
+      <input type="text" id="prospectSearch" placeholder="🔍 Rechercher un prospect..." style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:#090914;color:#fff;font-size:13px;outline:none">
+    </div>
+
+    <div id="prospectList">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ RESSOURCES ═══════════════════════ -->
+<div class="page" id="page-ressources">
+  <div class="page-header">
+    <h2>🔗 Ressources</h2>
+    <p>Tous les outils et pages déployés</p>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="emoji">🌐</span> Pages web déployées</div>
+    <div style="display:grid;gap:6px">
+      <a href="https://symbalyx.github.io/symbalyx-leads/" style="display:flex;align-items:center;gap:10px;padding:10px;background:#090914;border-radius:10px;text-decoration:none;border:1px solid var(--border)">
+        <span style="font-size:18px">🏠</span><span style="flex:1;font-size:13px;color:#fff">Accueil — Dashboard</span><span class="status-badge sent">Live</span>
+      </a>
+      <a href="https://symbalyx.github.io/symbalyx-leads/briefing.html" style="display:flex;align-items:center;gap:10px;padding:10px;background:#090914;border-radius:10px;text-decoration:none;border:1px solid var(--border)">
+        <span style="font-size:18px">🔥</span><span style="flex:1;font-size:13px;color:#fff">Briefing 500€</span><span class="status-badge sent">Live</span>
+      </a>
+      <a href="https://symbalyx.github.io/symbalyx-leads/call-dashboard.html" style="display:flex;align-items:center;gap:10px;padding:10px;background:#090914;border-radius:10px;text-decoration:none;border:1px solid var(--border)">
+        <span style="font-size:18px">📞</span><span style="flex:1;font-size:13px;color:#fff">Dashboard Appels</span><span class="status-badge sent">Live</span>
+      </a>
+      <a href="https://symbalyx.github.io/symbalyx-leads/services.html" style="display:flex;align-items:center;gap:10px;padding:10px;background:#090914;border-radius:10px;text-decoration:none;border:1px solid var(--border)">
+        <span style="font-size:18px">🛠️</span><span style="flex:1;font-size:13px;color:#fff">Services & Tarifs</span><span class="status-badge sent">Live</span>
+      </a>
+      <a href="https://symbalyx.github.io/symbalyx-leads/correction.html" style="display:flex;align-items:center;gap:10px;padding:10px;background:#090914;border-radius:10px;text-decoration:none;border:1px solid var(--border)">
+        <span style="font-size:18px">🔍</span><span style="flex:1;font-size:13px;color:#fff">Diagnostics 80 prospects</span><span class="status-badge sent">Live</span>
+      </a>
+      <a href="https://symbalyx.github.io/symbalyx-leads/audit.html" style="display:flex;align-items:center;gap:10px;padding:10px;background:#090914;border-radius:10px;text-decoration:none;border:1px solid var(--border)">
+        <span style="font-size:18px">📊</span><span style="flex:1;font-size:13px;color:#fff">Audit Self-Service 29€</span><span class="status-badge sent">Live</span>
+      </a>
+      <a href="https://symbalyx.github.io/symbalyx-leads/blog.html" style="display:flex;align-items:center;gap:10px;padding:10px;background:#090914;border-radius:10px;text-decoration:none;border:1px solid var(--border)">
+        <span style="font-size:18px">📝</span><span style="flex:1;font-size:13px;color:#fff">Blog SEO — 9 articles</span><span class="status-badge sent">Live</span>
+      </a>
+      <a href="https://symbalyx.github.io/symbalyx-leads/guide-seo.html" style="display:flex;align-items:center;gap:10px;padding:10px;background:#090914;border-radius:10px;text-decoration:none;border:1px solid var(--border)">
+        <span style="font-size:18px">📘</span><span style="flex:1;font-size:13px;color:#fff">Guide SEO gratuit (lead magnet)</span><span class="status-badge sent">Live</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="emoji">🔗</span> Liens utiles</div>
+    <div style="display:grid;gap:6px">
+      <a href="https://mail.zoho.eu/zm/" style="display:flex;gap:10px;padding:10px;background:#090914;border-radius:10px;text-decoration:none;border:1px solid var(--border)">
+        <span style="font-size:18px">📧</span><span style="flex:1;font-size:13px;color:#fff">Zoho Mail — Boîte de réception</span>
+      </a>
+      <a href="https://github.com/symbalyx/symbalyx-leads" style="display:flex;gap:10px;padding:10px;background:#090914;border-radius:10px;text-decoration:none;border:1px solid var(--border)">
+        <span style="font-size:18px">📂</span><span style="flex:1;font-size:13px;color:#fff">GitHub — symbalyx-leads (sources pages)</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ SYSTEM ═══════════════════════ -->
+<div class="page" id="page-system">
+  <div class="page-header">
+    <h2>⚙️ État système</h2>
+    <p>Infrastructure technique — tout ce qui tourne en arrière-plan</p>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="emoji">⏰</span> Crons actifs</div>
+    <div style="display:grid;gap:6px">
+      <div style="display:flex;align-items:center;gap:10px;padding:8px;background:#090914;border-radius:8px">
+        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green)"></span>
+        <span style="flex:1;font-size:13px;color:#fff">📤 Envoi emails — 1/30 min · 9h-17h UTC</span>
+        <span style="font-size:11px;color:var(--muted)">11h → 18h30 Paris</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px;background:#090914;border-radius:8px">
+        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green)"></span>
+        <span style="flex:1;font-size:13px;color:#fff">📬 Monitoring IMAP — toutes les 30 min</span>
+        <span style="font-size:11px;color:var(--muted)">8h-19h lun-ven</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px;background:#090914;border-radius:8px">
+        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green)"></span>
+        <span style="flex:1;font-size:13px;color:#fff">🔄 Séquence relance — tous les jours 9h UTC</span>
+        <span style="font-size:11px;color:var(--muted)">J+3/J+7/J+14</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px;background:#090914;border-radius:8px">
+        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green)"></span>
+        <span style="flex:1;font-size:13px;color:#fff">📋 Rapport matinal — 6h UTC</span>
+        <span style="font-size:11px;color:var(--muted)">Résumé quotidien</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="emoji">🔐</span> Services connectés</div>
+    <div style="display:grid;gap:6px">
+      <div style="display:flex;align-items:center;gap:10px;padding:8px;background:#090914;border-radius:8px">
+        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green)"></span>
+        <span style="flex:1;font-size:13px;color:#fff">Zoho SMTP (smtp.zoho.eu:465) — Envoi emails</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px;background:#090914;border-radius:8px">
+        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green)"></span>
+        <span style="flex:1;font-size:13px;color:#fff">Zoho IMAP (imap.zoho.eu:993) — Lecture réponses</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px;background:#090914;border-radius:8px">
+        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green)"></span>
+        <span style="flex:1;font-size:13px;color:#fff">GitHub API — Pages, contenu, déploiement</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+// ─── NAVIGATION ───
+function showPage(id, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (el) el.classList.add('active');
+  // Close mobile nav
+  document.getElementById('nav').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleNav() {
+  document.getElementById('nav').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+
+// ─── META UPDATE ───
+document.getElementById('navProgress').style.width = '0%';
+
+// ─── FILL PROSPECTS ───
+const TOP_PROSPECTS = [
+  { name: "Les Filles Les Fleurs", site: "lesfilleslesfleurs.com", url: "https://lesfilleslesfleurs.com", phone: "05 56 XX XX XX", score: "A+", tags: ["WP", "Fleurs", "Bordeaux"], status: "Envoyé" },
+  { name: "Mariage de Fleurs", site: "mariagedefleurs.fr", url: "https://mariagedefleurs.fr", phone: "05 57 XX XX XX", score: "A", tags: ["WP", "Fleurs", "Bordeaux"], status: "En cours" },
+  { name: "Boulangerie Moderne", site: "boulangeriemoderne.fr", url: "#", phone: "05 56 XX XX XX", score: "A+", tags: ["WP", "Boulangerie", "Bordeaux"], status: "Prêt" },
+  { name: "Restaurant Le Central", site: "restaurantlecentral.fr", url: "#", phone: "05 56 XX XX XX", score: "A", tags: ["Restaurant", "Bordeaux"], status: "Prêt" },
+  { name: "Dr. Martin - Kiné", site: "docteurmartin-kine.fr", url: "#", phone: "05 57 XX XX XX", score: "A+", tags: ["Santé", "Bordeaux"], status: "Prêt" },
+  { name: "Atelier Bois Design", site: "atelierboisdesign.fr", url: "#", phone: "05 56 XX XX XX", score: "A", tags: ["Artisanat", "Bordeaux"], status: "Prêt" },
+  { name: "Cabinet Dupont Avocats", site: "cabinetdupont-avocats.fr", url: "#", phone: "05 56 XX XX XX", score: "A+", tags: ["Juridique", "Bordeaux"], status: "Prêt" },
+  { name: "Pizzeria Da Luigi", site: "pizzeriadaluigi.fr", url: "#", phone: "05 57 XX XX XX", score: "A", tags: ["Restaurant", "Bordeaux"], status: "Prêt" },
+  { name: "Coiffure Luxe Bordeaux", site: "coiffureluxebordeaux.fr", url: "#", phone: "05 56 XX XX XX", score: "A+", tags: ["Beauté", "Bordeaux"], status: "Prêt" },
+  { name: "Garage Auto Prestige", site: "garageautoprestige.fr", url: "#", phone: "05 56 XX XX XX", score: "A", tags: ["Auto", "Bordeaux"], status: "Prêt" }
+];
+
+function renderProspects(list) {
+  const container = document.getElementById('prospectList');
+  container.innerHTML = list.map(p => `
+    <div class="prospect">
+      <div class="info">
+        <div class="name">${p.name}</div>
+        <a href="${p.url}" class="site" target="_blank">${p.site}</a>
+        <div class="tags">
+          <span>📞 ${p.phone}</span>
+          <span>⭐ ${p.score}</span>
+          ${p.tags.map(t => `<span>${t}</span>`).join('')}
+        </div>
+      </div>
+      <div class="actions">
+        <a href="tel:${p.phone.replace(/[^0-9+]/g,'')}" class="call">📞 Appeler</a>
+        <a href="${p.url}" class="site" target="_blank">🔗 Site</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+renderProspects(TOP_PROSPECTS);
+
+document.getElementById('prospectSearch').addEventListener('input', function() {
+  const q = this.value.toLowerCase();
+  const filtered = TOP_PROSPECTS.filter(p =>
+    p.name.toLowerCase().includes(q) || p.site.toLowerCase().includes(q) || p.tags.some(t => t.toLowerCase().includes(q))
+  );
+  renderProspects(filtered);
+});
+</script>
+
+</body>
+</html>
