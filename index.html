@@ -3,283 +3,343 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SYMBALYX — Centre d'operations</title>
+<title>SYMBALYX · Centre d'operations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
+  --bg: #0a0a0f;
+  --surface: #101018;
+  --card: #16161f;
+  --border: #1e1e2a;
   --terracotta: #a0522d;
   --terracotta-light: #c0693f;
-  --terracotta-dim: #a0522d15;
-  --black: #1a1a1a;
-  --black-soft: #222;
-  --paper: #f5f0eb;
-  --paper-dark: #e8e0d6;
-  --white: #ffffff;
-  --muted: #888;
+  --terracotta-dim: #a0522d20;
   --green: #2d8a4e;
-  --green-dim: #2d8a4e15;
-  --red: #c0392b;
+  --green-dim: #2d8a4e20;
   --blue: #2c5f7a;
-  --radius: 4px;
+  --blue-dim: #2c5f7a20;
+  --red: #c0392b;
+  --text: #e0e0e0;
+  --muted: #666;
+  --dim: #999;
   --font: 'Inter', -apple-system, sans-serif;
-  --font-display: 'Playfair Display', Georgia, serif;
+  --radius: 12px;
+  --radius-sm: 6px;
 }
 html { scroll-behavior: smooth; }
-body { font-family: var(--font); background: var(--white); color: var(--black); line-height: 1.6; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; font-size: 14px; }
+::selection { background: var(--terracotta-dim); color: var(--terracotta-light); }
 
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: var(--white); border-bottom: 1px solid var(--paper-dark);
-  padding: 0 40px; height: 60px; display: flex; align-items: center;
-  justify-content: space-between;
-}
-nav .logo { font-family: var(--font-display); font-size: 20px; color: var(--terracotta); text-decoration: none; letter-spacing: -0.5px; }
-nav .logo span { color: var(--black); }
-nav .nav-links { display: flex; gap: 4px; }
-nav .nav-links a {
-  padding: 8px 16px; text-decoration: none; color: var(--muted); font-size: 13px;
-  font-weight: 500; transition: all 0.2s; border-radius: var(--radius);
-}
-nav .nav-links a:hover { color: var(--black); background: var(--paper); }
-nav .nav-links a.active { color: var(--terracotta); background: var(--terracotta-dim); }
+/* ── APP LAYOUT ── */
+.app { display: flex; min-height: 100vh; }
 
-.hero {
-  margin-top: 60px; padding: 80px 40px 60px;
-  background: linear-gradient(135deg, var(--black) 0%, #2a1a10 100%);
-  color: var(--white);
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 220px; background: var(--surface); border-right: 1px solid var(--border);
+  padding: 20px 0; position: fixed; top: 0; left: 0; bottom: 0;
+  display: flex; flex-direction: column; z-index: 50;
 }
-.hero h1 { font-family: var(--font-display); font-size: 42px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.5px; }
-.hero h1 em { font-style: normal; color: var(--terracotta-light); }
-.hero p { font-size: 16px; color: #aaa; max-width: 500px; font-weight: 300; }
-.hero-stats { display: flex; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
-.hero-stat .num { font-size: 32px; font-weight: 700; color: var(--white); }
-.hero-stat .num .terracotta { color: var(--terracotta-light); }
-.hero-stat .label { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
-
-.section { padding: 60px 40px; }
-.section.alt { background: var(--paper); }
-.section-header { margin-bottom: 40px; }
-.section-header h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.3px; }
-.section-header h2:after {
-  content: ''; display: block; width: 40px; height: 3px; background: var(--terracotta); margin-top: 8px;
+.sidebar-logo {
+  padding: 0 20px 16px; border-bottom: 1px solid var(--border); margin-bottom: 8px;
 }
-.section-header p { color: var(--muted); font-size: 14px; margin-top: 8px; }
+.sidebar-logo h1 {
+  font-size: 18px; font-weight: 800; color: var(--terracotta); letter-spacing: -0.5px;
+}
+.sidebar-logo p { font-size: 11px; color: var(--muted); margin-top: 2px; letter-spacing: 0.5px; }
+.sidebar-section {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted);
+  padding: 16px 20px 6px; font-weight: 600;
+}
+.sidebar a {
+  display: flex; align-items: center; gap: 10px; padding: 9px 20px;
+  color: var(--dim); text-decoration: none; font-size: 13px; font-weight: 500;
+  transition: all 0.15s; border-left: 2px solid transparent;
+}
+.sidebar a:hover { background: var(--card); color: var(--text); }
+.sidebar a.active {
+  color: var(--terracotta-light); background: var(--terracotta-dim);
+  border-left-color: var(--terracotta);
+}
+.sidebar .badge {
+  margin-left: auto; font-size: 10px; font-weight: 700; padding: 2px 7px;
+  border-radius: 100px; background: var(--card); color: var(--dim);
+}
+.sidebar .badge.gold { background: var(--terracotta-dim); color: var(--terracotta-light); }
+.sidebar .badge.green { background: var(--green-dim); color: var(--green); }
+.sidebar-spacer { flex: 1; }
+.sidebar-footer {
+  padding: 12px 20px; font-size: 10px; color: var(--muted); border-top: 1px solid var(--border);
+  text-align: center;
+}
 
-.card-grid { display: grid; gap: 20px; }
+/* ── MAIN ── */
+.main { flex: 1; margin-left: 220px; padding: 24px 32px; max-width: 1200px; }
+
+/* ── HEADER ── */
+.page-header { margin-bottom: 28px; }
+.page-header h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+.page-header p { color: var(--muted); font-size: 13px; margin-top: 4px; }
+.page-header .line {
+  width: 40px; height: 3px; background: var(--terracotta); margin-top: 10px;
+}
+
+/* ── STATS CARDS ── */
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+.stat-card {
+  background: var(--surface); border: 1px solid var(--border); padding: 20px;
+  position: relative; overflow: hidden;
+}
+.stat-card .num { font-size: 30px; font-weight: 800; line-height: 1; letter-spacing: -1px; }
+.stat-card .label { font-size: 11px; color: var(--muted); margin-top: 6px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+.stat-card .sub { font-size: 11px; color: var(--dim); margin-top: 8px; }
+.stat-card .bar {
+  position: absolute; bottom: 0; left: 0; height: 3px; border-radius: 0 2px 0 0;
+}
+.stat-card .bar.terracotta { background: var(--terracotta); width: 42%; }
+.stat-card .bar.green { background: var(--green); width: 18%; }
+.stat-card .bar.blue { background: var(--blue); width: 100%; }
+.stat-card .bar.gold { background: var(--terracotta-light); width: 65%; }
+
+/* ── CARDS GRID ── */
+.card-grid { display: grid; gap: 16px; }
 .card-grid.cols-2 { grid-template-columns: 1fr 1fr; }
 .card-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
 .card {
-  background: var(--white); border: 1px solid var(--paper-dark); padding: 24px;
-  transition: all 0.2s; position: relative;
+  background: var(--surface); border: 1px solid var(--border); padding: 20px;
+  transition: all 0.2s; border-radius: var(--radius-sm);
 }
-.card.alt { background: var(--paper); }
 .card:hover { border-color: var(--terracotta); }
-.card h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
-.card p { font-size: 13px; color: var(--muted); line-height: 1.5; }
-.card .meta { font-size: 11px; color: #bbb; margin-top: 12px; text-transform: uppercase; letter-spacing: 1px; }
-.card .btn {
-  display: inline-block; margin-top: 16px; padding: 8px 20px; font-size: 12px;
-  font-weight: 600; text-decoration: none; text-transform: uppercase; letter-spacing: 1px;
-  background: var(--terracotta); color: var(--white); transition: all 0.2s;
-}
-.card .btn:hover { background: var(--terracotta-light); }
+.card h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+.card p { font-size: 13px; color: var(--dim); line-height: 1.5; }
 .card .tag {
   display: inline-block; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
-  padding: 2px 8px; background: var(--paper); color: var(--muted); margin-bottom: 8px;
+  padding: 2px 8px; background: var(--card); color: var(--muted); margin-bottom: 10px;
+  border-radius: 2px;
 }
+.card .btn {
+  display: inline-block; margin-top: 16px; padding: 7px 18px; font-size: 11px;
+  font-weight: 600; text-decoration: none; text-transform: uppercase; letter-spacing: 1px;
+  background: var(--terracotta); color: var(--text); transition: all 0.2s;
+  border-radius: var(--radius-sm); border: none; cursor: pointer;
+}
+.card .btn:hover { background: var(--terracotta-light); }
+.card .meta { font-size: 11px; color: var(--muted); margin-top: 10px; display: block; letter-spacing: 0.3px; }
 
-.status { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; }
-.status-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
-.status-dot.green { background: var(--green); }
-.status-dot.red { background: var(--red); }
-.status-dot.muted { background: #ccc; }
-
+/* ── TIMELINE ── */
 .timeline { position: relative; padding-left: 24px; }
 .timeline:before {
   content: ''; position: absolute; left: 7px; top: 4px; bottom: 4px;
-  width: 1px; background: var(--paper-dark);
+  width: 1px; background: var(--border);
 }
-.timeline-item { position: relative; margin-bottom: 20px; }
-.timeline-item:before {
-  content: ''; position: absolute; left: -21px; top: 6px;
-  width: 9px; height: 9px; border-radius: 50%; background: var(--terracotta);
+.tl-item { position: relative; margin-bottom: 18px; }
+.tl-dot {
+  position: absolute; left: -21px; top: 5px;
+  width: 8px; height: 8px; border-radius: 50%; background: var(--terracotta);
 }
-.timeline-item .time { font-size: 11px; color: #bbb; text-transform: uppercase; letter-spacing: 1px; }
-.timeline-item h4 { font-size: 14px; font-weight: 600; margin: 2px 0; }
-.timeline-item p { font-size: 13px; color: var(--muted); }
+.tl-dot.green { background: var(--green); }
+.tl-dot.muted { background: var(--muted); }
+.tl-time { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.tl-title { font-size: 13px; font-weight: 600; margin: 2px 0; }
+.tl-desc { font-size: 12px; color: var(--dim); }
+.tl-price { font-size: 11px; color: var(--terracotta-light); font-weight: 600; }
 
-footer {
-  padding: 40px; text-align: center; font-size: 12px; color: #bbb;
-  border-top: 1px solid var(--paper-dark);
-}
+/* ── SECTION ── */
+.section-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.2px; }
 
-@media (max-width: 768px) {
-  nav { padding: 0 20px; }
-  nav .nav-links a { padding: 6px 10px; font-size: 12px; }
-  .hero { padding: 60px 20px 40px; }
-  .hero h1 { font-size: 28px; }
-  .hero-stats { flex-direction: column; gap: 20px; }
-  .section { padding: 40px 20px; }
+/* ── RESPONSIVE ── */
+@media (max-width: 800px) {
+  .sidebar { width: 60px; overflow: hidden; }
+  .sidebar a span, .sidebar-logo p, .sidebar-logo h1 { display: none; }
+  .sidebar a { justify-content: center; padding: 12px; }
+  .sidebar-section { display: none; }
+  .sidebar-footer { display: none; }
+  .main { margin-left: 60px; padding: 20px 16px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .card-grid.cols-2, .card-grid.cols-3 { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 500px) {
+  .stats-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
+<div class="app">
 
-<nav>
-  <a href="/symbalyx-ops-center/" class="logo">Symbalyx<span>.</span></a>
-  <div class="nav-links">
-    <a href="/symbalyx-ops-center/" class="active">Tableau de bord</a>
-    <a href="/symbalyx-ops-center/pages/devis.html">Devis</a>
-    <a href="/symbalyx-ops-center/pages/add-prospect.html">Ajouter prospect</a>
-    <a href="/symbalyx-ops-center/pages/recap.html">Recapitulatif</a>
-    <a href="/symbalyx-ops-center/pages/blog.html">Blog</a>
-    <a href="/symbalyx-ops-center/projets/talentsphere/">Talentsphere</a>
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <h1>Symbalyx</h1>
+    <p>Centre d'operations</p>
   </div>
-</nav>
 
-<div class="hero">
-  <h1>Centre d'<em>operations</em></h1>
-  <p>Pilotage de la campagne de prospection et des projets en cours.</p>
-  <div class="hero-stats" id="stats">
-    <div class="hero-stat">
-      <div class="num" id="stat-envoyes">9</div>
-      <div class="label">Emails envoyes</div>
-    </div>
-    <div class="hero-stat">
-      <div class="num" id="stat-prospects">117</div>
-      <div class="label">Prospects en file</div>
-    </div>
-    <div class="hero-stat">
-      <div class="num" id="stat-reponses">0</div>
-      <div class="label">Reponses recues</div>
-    </div>
-    <div class="hero-stat">
-      <div class="num"><span class="terracotta" id="stat-restants">108</span></div>
-      <div class="label">Drafts restants</div>
-    </div>
-  </div>
+  <div class="sidebar-section">Navigation</div>
+  <a href="/symbalyx-ops-center/" class="active">Tableau de bord</a>
+  <a href="/symbalyx-ops-center/pages/devis.html">Generateur de devis</a>
+  <a href="/symbalyx-ops-center/pages/add-prospect.html">Ajouter un prospect</a>
+  <a href="/symbalyx-ops-center/pages/recap.html">Recapitulatif</a>
+
+  <div class="sidebar-section">Projets</div>
+  <a href="/symbalyx-ops-center/projets/talentsphere/">Talentsphere <span class="badge gold">1 800 EUR</span></a>
+
+  <div class="sidebar-section">Contenu</div>
+  <a href="/symbalyx-ops-center/pages/blog.html">Blog <span class="badge">8 articles</span></a>
+
+  <div class="sidebar-spacer"></div>
+  <div class="sidebar-footer">Symbalyx · Bordeaux</div>
 </div>
 
-<div class="section">
-  <div class="section-header">
-    <h2>Outils</h2>
-    <p>Les outils de travail pour la campagne de prospection.</p>
-  </div>
-  <div class="card-grid cols-3">
-    <div class="card">
-      <div class="tag">Devis</div>
-      <h3>Generateur de devis</h3>
-      <p>Creez un devis personnalise pour vos prospects. Selection des prestations, calcul automatique, generation PDF et envoi par email.</p>
-      <a href="/symbalyx-ops-center/pages/devis.html" class="btn">Ouvrir</a>
-    </div>
-    <div class="card">
-      <div class="tag">Prospection</div>
-      <h3>Ajouter un prospect</h3>
-      <p>Ajoutez rapidement un nouveau prospect a la pipeline. Le systeme genere automatiquement un draft et l'integre dans la file d'envoi.</p>
-      <a href="/symbalyx-ops-center/pages/add-prospect.html" class="btn">Ouvrir</a>
-    </div>
-    <div class="card">
-      <div class="tag">Suivi</div>
-      <h3>Recapitulatif</h3>
-      <p>Vue d'ensemble de la campagne : historique des envois, reponses recues, statistiques de suivi et reporting complet.</p>
-      <a href="/symbalyx-ops-center/pages/recap.html" class="btn">Ouvrir</a>
-    </div>
-  </div>
-</div>
+<!-- MAIN -->
+<div class="main">
 
-<div class="section alt">
-  <div class="section-header">
-    <h2>Projets en cours</h2>
-    <p>Les missions et projets actifs de Symbalyx.</p>
-  </div>
-  <div class="card-grid cols-2">
-    <div class="card">
-      <div class="tag">n8n / IA</div>
-      <h3>Talentsphere — Veille emploi media</h3>
-      <p>Scraping automatise de 5 sources (ProfilCulture, TF1, Arte, France TV, WTTJ) + enrichissement GPT + email hebdomadaire. Budget : 1 800 EUR. En attente de reponse client.</p>
-      <span class="meta">Jerome Chouraqui · jerome.chouraqui@talentsphere.fr</span>
-      <a href="/symbalyx-ops-center/projets/talentsphere/" class="btn">Voir le projet</a>
-    </div>
-    <div class="card">
-      <div class="tag">WordPress</div>
-      <h3>Campagne de securite WordPress</h3>
-      <p>Prospection de TPE/PME bordelaises avec sites WordPress vulnerables. Offre : audit de securite a 29 EUR et correctifs a 99 EUR.</p>
-      <span class="meta">117 drafts generes · File d'envoi active</span>
-      <a href="/symbalyx-ops-center/pages/recap.html" class="btn">Voir les stats</a>
-    </div>
-  </div>
-</div>
+  <!-- PAGE: Dashboard -->
+  <div class="page active">
 
-<div class="section">
-  <div class="section-header">
-    <h2>Activite recente</h2>
-    <p>Les derniers envois de la journee.</p>
-  </div>
-  <div class="timeline" id="timeline">
-    <div class="timeline-item">
-      <div class="time">Prochain envoi a 13h30</div>
-      <h4>draft_010.txt</h4>
-      <p>Bordeauxwine — securite WordPress</p>
+    <div class="page-header">
+      <h2>Tableau de bord</h2>
+      <p>Campagne de prospection WordPress · Mise a jour en temps reel</p>
+      <div class="line"></div>
     </div>
-    <div class="timeline-item">
-      <div class="time">13h00</div>
-      <h4>jerome.chouraqui@talentsphere.fr</h4>
-      <p>Proposition n8n veille emploi media — 1 800 EUR</p>
-    </div>
-    <div class="timeline-item">
-      <div class="time">12h30</div>
-      <h4>contact@hoerner-ordonneau.fr</h4>
-      <p>Securite WordPress — architecte Bordeaux</p>
-    </div>
-    <div class="timeline-item">
-      <div class="time">12h00</div>
-      <h4>contact@lepiedaterre-cave.fr</h4>
-      <p>Securite WordPress — caviste</p>
-    </div>
-    <div class="timeline-item">
-      <div class="time">11h30</div>
-      <h4>contact@elitesport.fr</h4>
-      <p>Securite WordPress — salle de sport</p>
-    </div>
-    <div class="timeline-item">
-      <div class="time">11h00</div>
-      <h4>mariagedefleurs@gmail.com</h4>
-      <p>Securite WordPress — fleuriste</p>
-    </div>
-  </div>
-</div>
 
-<div class="section alt">
-  <div class="section-header">
-    <h2>Etat du systeme</h2>
-    <p>Statut des differents services et automatismes.</p>
-  </div>
-  <div class="card-grid cols-2">
-    <div class="card">
-      <h3><span class="status"><span class="status-dot green"></span> Envoi d'emails</span></h3>
-      <p>Cron actif : 1 email toutes les 30 min, de 11h a 18h30 (CEST), jours ouverts.</p>
+    <!-- STATS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="num" style="color: var(--terracotta-light);">9</div>
+        <div class="label">Emails envoyes</div>
+        <div class="sub">Aujourd'hui</div>
+        <div class="bar terracotta"></div>
+      </div>
+      <div class="stat-card">
+        <div class="num" style="color: var(--text);">108</div>
+        <div class="label">Drafts restants</div>
+        <div class="sub">Sur 117 au total</div>
+        <div class="bar gold"></div>
+      </div>
+      <div class="stat-card">
+        <div class="num" style="color: var(--green);">0</div>
+        <div class="label">Reponses recues</div>
+        <div class="sub">Dont 0 de prospects</div>
+        <div class="bar green"></div>
+      </div>
+      <div class="stat-card">
+        <div class="num" style="color: var(--blue);">189</div>
+        <div class="label">Sites blacklistes</div>
+        <div class="sub">Deja prospectes</div>
+        <div class="bar blue"></div>
+      </div>
     </div>
-    <div class="card">
-      <h3><span class="status"><span class="status-dot green"></span> Monitoring reponses</span></h3>
-      <p>Scan IMAP toutes les 30 min pour detecter les reponses des prospects.</p>
-    </div>
-    <div class="card">
-      <h3><span class="status"><span class="status-dot green"></span> Prospection nocturne</span></h3>
-      <p>Recherche de nouveaux prospects + scan securite + generation drafts chaque nuit a partir de 20h.</p>
-    </div>
-    <div class="card">
-      <h3><span class="status"><span class="status-dot green"></span> Rapport matinal</span></h3>
-      <p>Resume quotidien livre chaque matin a 8h avec le bilan de la nuit et les stats.</p>
-    </div>
-  </div>
-</div>
 
-<footer>
-  Symbalyx — Studio web & automatisation · Bordeaux
-</footer>
+    <!-- OUTILS -->
+    <div class="section-title">Outils</div>
+    <div class="card-grid cols-3" style="margin-bottom: 28px;">
+      <div class="card">
+        <div class="tag">Devis</div>
+        <h3>Generateur de devis</h3>
+        <p>Creez un devis personnalise avec calcul automatique, generation PDF et envoi par email.</p>
+        <a href="/symbalyx-ops-center/pages/devis.html" class="btn">Ouvrir</a>
+      </div>
+      <div class="card">
+        <div class="tag">Prospection</div>
+        <h3>Ajouter un prospect</h3>
+        <p>Ajoutez un nouveau prospect a la pipeline. Un draft est genere et integre automatiquement.</p>
+        <a href="/symbalyx-ops-center/pages/add-prospect.html" class="btn">Ouvrir</a>
+      </div>
+      <div class="card">
+        <div class="tag">Suivi</div>
+        <h3>Recapitulatif</h3>
+        <p>Historique complet des envois, reponses recues et statistiques de campagne.</p>
+        <a href="/symbalyx-ops-center/pages/recap.html" class="btn">Ouvrir</a>
+      </div>
+    </div>
 
+    <!-- PROJET EN COURS -->
+    <div class="section-title">Projet en cours</div>
+    <div class="card-grid cols-2" style="margin-bottom: 28px;">
+      <div class="card">
+        <div class="tag">n8n · IA</div>
+        <h3>Talentsphere — Veille emploi media</h3>
+        <p>Scraping automatise de 5 sources (ProfilCulture, TF1, Arte, France TV, WTTJ) + enrichissement GPT + email hebdomadaire automatise.</p>
+        <span class="meta">Client: Jerome Chouraqui · jerome.chouraqui@talentsphere.fr</span>
+        <span class="meta" style="color: var(--terracotta-light); font-weight: 600;">Budget: 1 800 EUR · En attente de reponse</span>
+        <a href="/symbalyx-ops-center/projets/talentsphere/" class="btn">Voir le projet</a>
+      </div>
+      <div class="card">
+        <div class="tag">WordPress</div>
+        <h3>Campagne de securite WordPress</h3>
+        <p>Prospection de TPE/PME bordelaises avec sites WordPress vulnerables. Offre audit a 29 EUR et correctifs a 99 EUR.</p>
+        <span class="meta">117 drafts generes · File d'envoi active (1/30min)</span>
+        <a href="/symbalyx-ops-center/pages/recap.html" class="btn">Voir les stats</a>
+      </div>
+    </div>
+
+    <!-- ACTIVITE -->
+    <div class="section-title">Activite recente</div>
+    <div class="timeline" style="margin-bottom: 28px;">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-time">13h30 — Prochain envoi</div>
+        <div class="tl-title">draft_010.txt · Bordeauxwine</div>
+        <div class="tl-desc">Proposition securite WordPress</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot green"></div>
+        <div class="tl-time">13h00</div>
+        <div class="tl-title">jerome.chouraqui@talentsphere.fr</div>
+        <div class="tl-desc">Proposition n8n veille emploi media</div>
+        <div class="tl-price">1 800 EUR</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-time">12h30</div>
+        <div class="tl-title">contact@hoerner-ordonneau.fr</div>
+        <div class="tl-desc">Securite WordPress — Architecte Bordeaux</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-time">12h00</div>
+        <div class="tl-title">contact@lepiedaterre-cave.fr</div>
+        <div class="tl-desc">Securite WordPress — Caviste</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-time">11h30</div>
+        <div class="tl-title">contact@elitesport.fr</div>
+        <div class="tl-desc">Securite WordPress — Salle de sport</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-time">11h00</div>
+        <div class="tl-title">mariagedefleurs@gmail.com</div>
+        <div class="tl-desc">Securite WordPress — Fleuriste</div>
+      </div>
+    </div>
+
+    <!-- SYSTEME -->
+    <div class="section-title">Etat du systeme</div>
+    <div class="card-grid cols-2" style="margin-bottom: 40px;">
+      <div class="card">
+        <h3><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-right:8px;"></span>Envoi d'emails</h3>
+        <p>Cron actif · 1 email/30min · 11h-18h30 (CEST) · Jours ouverts</p>
+      </div>
+      <div class="card">
+        <h3><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-right:8px;"></span>Monitoring reponses</h3>
+        <p>Scan IMAP · Toutes les 30 min · Detection des reponses prospects</p>
+      </div>
+      <div class="card">
+        <h3><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-right:8px;"></span>Prospection nocturne</h3>
+        <p>Recherche + scan + drafts · De 20h a 6h · Automatique</p>
+      </div>
+      <div class="card">
+        <h3><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-right:8px;"></span>Rapport matinal</h3>
+        <p>Resume quotidien · Livre a 8h · Bilan de la nuit + stats</p>
+      </div>
+    </div>
+
+  </div>
+
+</div><!-- /main -->
+</div><!-- /app -->
 </body>
 </html>
