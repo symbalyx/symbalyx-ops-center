@@ -3,165 +3,153 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SYMBALYX · Centre d'operations</title>
+<title>SYMBALYX · Operations Center</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-:root {
-  --bg: #0a0a0f;
-  --surface: #101018;
-  --card: #16161f;
-  --border: #1e1e2a;
-  --terracotta: #a0522d;
-  --terracotta-light: #c0693f;
-  --terracotta-dim: #a0522d20;
-  --green: #2d8a4e;
-  --green-dim: #2d8a4e20;
-  --blue: #2c5f7a;
-  --blue-dim: #2c5f7a20;
-  --red: #c0392b;
-  --text: #e0e0e0;
-  --muted: #666;
-  --dim: #999;
-  --font: 'Inter', -apple-system, sans-serif;
-  --radius: 12px;
-  --radius-sm: 6px;
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#08090a;
+  --surface:#0f1011;
+  --card:#191a1b;
+  --card-hover:#202124;
+  --border:rgba(255,255,255,0.08);
+  --border-subtle:rgba(255,255,255,0.05);
+  --terracotta:#a0522d;
+  --terracotta-light:#c0693f;
+  --terracotta-dim:rgba(160,82,45,0.15);
+  --green:#27a644;
+  --green-dim:rgba(39,166,68,0.15);
+  --blue:#3b82f6;
+  --blue-dim:rgba(59,130,246,0.15);
+  --red:#ef4444;
+  --text:#f7f8f8;
+  --text-secondary:#d0d6e0;
+  --text-muted:#8a8f98;
+  --text-dim:#62666d;
+  --radius:8px;
+  --radius-sm:6px;
+  --font:'Inter',-apple-system,system-ui,sans-serif;
 }
-html { scroll-behavior: smooth; }
-body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; font-size: 14px; }
-::selection { background: var(--terracotta-dim); color: var(--terracotta-light); }
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5;font-feature-settings:'cv01','ss03'}
+::selection{background:var(--terracotta-dim);color:var(--terracotta-light)}
 
-/* ── APP LAYOUT ── */
-.app { display: flex; min-height: 100vh; }
+/* ── LAYOUT ── */
+.app{display:flex;min-height:100vh}
 
 /* ── SIDEBAR ── */
-.sidebar {
-  width: 220px; background: var(--surface); border-right: 1px solid var(--border);
-  padding: 20px 0; position: fixed; top: 0; left: 0; bottom: 0;
-  display: flex; flex-direction: column; z-index: 50;
+.sidebar{
+  width:224px;background:var(--surface);border-right:1px solid var(--border);
+  padding:0;position:fixed;top:0;left:0;bottom:0;z-index:50;
+  display:flex;flex-direction:column;
 }
-.sidebar-logo {
-  padding: 0 20px 16px; border-bottom: 1px solid var(--border); margin-bottom: 8px;
+.sidebar-logo{
+  padding:20px;border-bottom:1px solid var(--border-subtle);margin-bottom:8px;
 }
-.sidebar-logo h1 {
-  font-size: 18px; font-weight: 800; color: var(--terracotta); letter-spacing: -0.5px;
+.sidebar-logo h1{
+  font-size:17px;font-weight:700;color:var(--terracotta);letter-spacing:-0.3px;
 }
-.sidebar-logo p { font-size: 11px; color: var(--muted); margin-top: 2px; letter-spacing: 0.5px; }
-.sidebar-section {
-  font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted);
-  padding: 16px 20px 6px; font-weight: 600;
+.sidebar-logo p{font-size:11px;color:var(--text-dim);margin-top:1px;font-weight:400}
+.sidebar-label{
+  font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:var(--text-dim);
+  padding:16px 20px 4px;font-weight:600;
 }
-.sidebar a {
-  display: flex; align-items: center; gap: 10px; padding: 9px 20px;
-  color: var(--dim); text-decoration: none; font-size: 13px; font-weight: 500;
-  transition: all 0.15s; border-left: 2px solid transparent;
+.sidebar a{
+  display:flex;align-items:center;gap:8px;padding:8px 20px;
+  color:var(--text-muted);text-decoration:none;font-size:13px;font-weight:500;
+  transition:all .12s;margin:0 8px;border-radius:var(--radius-sm);
 }
-.sidebar a:hover { background: var(--card); color: var(--text); }
-.sidebar a.active {
-  color: var(--terracotta-light); background: var(--terracotta-dim);
-  border-left-color: var(--terracotta);
+.sidebar a:hover{background:var(--card);color:var(--text)}
+.sidebar a.active{color:var(--terracotta-light);background:var(--terracotta-dim)}
+.sidebar a .badge{
+  margin-left:auto;font-size:10px;font-weight:600;padding:2px 6px;
+  border-radius:100px;background:var(--border-subtle);color:var(--text-dim);
 }
-.sidebar .badge {
-  margin-left: auto; font-size: 10px; font-weight: 700; padding: 2px 7px;
-  border-radius: 100px; background: var(--card); color: var(--dim);
-}
-.sidebar .badge.gold { background: var(--terracotta-dim); color: var(--terracotta-light); }
-.sidebar .badge.green { background: var(--green-dim); color: var(--green); }
-.sidebar-spacer { flex: 1; }
-.sidebar-footer {
-  padding: 12px 20px; font-size: 10px; color: var(--muted); border-top: 1px solid var(--border);
-  text-align: center;
+.sidebar a .badge.gold{background:var(--terracotta-dim);color:var(--terracotta-light)}
+.sidebar-spacer{flex:1}
+.sidebar-footer{
+  padding:12px 20px;font-size:10px;color:var(--text-dim);
+  border-top:1px solid var(--border-subtle);text-align:center;
+  letter-spacing:0.5px;
 }
 
 /* ── MAIN ── */
-.main { flex: 1; margin-left: 220px; padding: 24px 32px; max-width: 1200px; }
+.main{flex:1;margin-left:224px;padding:28px 36px;max-width:1200px}
 
 /* ── HEADER ── */
-.page-header { margin-bottom: 28px; }
-.page-header h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
-.page-header p { color: var(--muted); font-size: 13px; margin-top: 4px; }
-.page-header .line {
-  width: 40px; height: 3px; background: var(--terracotta); margin-top: 10px;
+.page-header{margin-bottom:28px}
+.page-header h2{font-size:20px;font-weight:600;letter-spacing:-0.3px}
+.page-header p{color:var(--text-muted);font-size:13px;margin-top:2px;font-weight:400}
+.page-header .line{width:32px;height:2px;background:var(--terracotta);margin-top:10px;border-radius:2px}
+
+/* ── STATS ROW ── */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
+.stat{
+  background:var(--surface);border:1px solid var(--border-subtle);padding:16px 20px;
+  position:relative;overflow:hidden;border-radius:var(--radius);
+}
+.stat .num{font-size:28px;font-weight:700;line-height:1;letter-spacing:-1px}
+.stat .label{font-size:11px;color:var(--text-dim);margin-top:4px;text-transform:uppercase;letter-spacing:0.8px;font-weight:500}
+.stat .sub{font-size:11px;color:var(--text-muted);margin-top:6px}
+.stat .bar{
+  position:absolute;bottom:0;left:0;height:2px;border-radius:0 1px 0 0;
 }
 
-/* ── STATS CARDS ── */
-.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
-.stat-card {
-  background: var(--surface); border: 1px solid var(--border); padding: 20px;
-  position: relative; overflow: hidden;
-}
-.stat-card .num { font-size: 30px; font-weight: 800; line-height: 1; letter-spacing: -1px; }
-.stat-card .label { font-size: 11px; color: var(--muted); margin-top: 6px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
-.stat-card .sub { font-size: 11px; color: var(--dim); margin-top: 8px; }
-.stat-card .bar {
-  position: absolute; bottom: 0; left: 0; height: 3px; border-radius: 0 2px 0 0;
-}
-.stat-card .bar.terracotta { background: var(--terracotta); width: 42%; }
-.stat-card .bar.green { background: var(--green); width: 18%; }
-.stat-card .bar.blue { background: var(--blue); width: 100%; }
-.stat-card .bar.gold { background: var(--terracotta-light); width: 65%; }
+/* ── SECTION TITLE ── */
+.sec-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:12px;letter-spacing:-0.2px;text-transform:uppercase}
 
 /* ── CARDS GRID ── */
-.card-grid { display: grid; gap: 16px; }
-.card-grid.cols-2 { grid-template-columns: 1fr 1fr; }
-.card-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
-.card {
-  background: var(--surface); border: 1px solid var(--border); padding: 20px;
-  transition: all 0.2s; border-radius: var(--radius-sm);
+.grid{display:grid;gap:12px;margin-bottom:32px}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.c{
+  background:var(--card);border:1px solid var(--border-subtle);padding:18px 20px;
+  transition:all .15s;border-radius:var(--radius);
 }
-.card:hover { border-color: var(--terracotta); }
-.card h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
-.card p { font-size: 13px; color: var(--dim); line-height: 1.5; }
-.card .tag {
-  display: inline-block; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
-  padding: 2px 8px; background: var(--card); color: var(--muted); margin-bottom: 10px;
-  border-radius: 2px;
+.c:hover{border-color:rgba(255,255,255,0.15);background:var(--card-hover)}
+.c .tag{
+  font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);
+  margin-bottom:8px;font-weight:500;
 }
-.card .btn {
-  display: inline-block; margin-top: 16px; padding: 7px 18px; font-size: 11px;
-  font-weight: 600; text-decoration: none; text-transform: uppercase; letter-spacing: 1px;
-  background: var(--terracotta); color: var(--text); transition: all 0.2s;
-  border-radius: var(--radius-sm); border: none; cursor: pointer;
+.c h3{font-size:14px;font-weight:600;margin-bottom:4px;color:var(--text);letter-spacing:-0.2px}
+.c p{font-size:12.5px;color:var(--text-muted);line-height:1.5;font-weight:400}
+.c .meta{font-size:11px;color:var(--text-dim);margin-top:8px;display:block}
+.c .price{color:var(--terracotta-light);font-weight:600;font-size:12px}
+.c .btn{
+  display:inline-block;margin-top:12px;padding:6px 14px;font-size:11px;
+  font-weight:500;text-decoration:none;background:transparent;
+  color:var(--text-secondary);border:1px solid var(--border);
+  transition:all .15s;border-radius:var(--radius-sm);letter-spacing:0.3px;
 }
-.card .btn:hover { background: var(--terracotta-light); }
-.card .meta { font-size: 11px; color: var(--muted); margin-top: 10px; display: block; letter-spacing: 0.3px; }
+.c .btn:hover{background:var(--terracotta-dim);border-color:var(--terracotta);color:var(--terracotta-light)}
 
 /* ── TIMELINE ── */
-.timeline { position: relative; padding-left: 24px; }
-.timeline:before {
-  content: ''; position: absolute; left: 7px; top: 4px; bottom: 4px;
-  width: 1px; background: var(--border);
-}
-.tl-item { position: relative; margin-bottom: 18px; }
-.tl-dot {
-  position: absolute; left: -21px; top: 5px;
-  width: 8px; height: 8px; border-radius: 50%; background: var(--terracotta);
-}
-.tl-dot.green { background: var(--green); }
-.tl-dot.muted { background: var(--muted); }
-.tl-time { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
-.tl-title { font-size: 13px; font-weight: 600; margin: 2px 0; }
-.tl-desc { font-size: 12px; color: var(--dim); }
-.tl-price { font-size: 11px; color: var(--terracotta-light); font-weight: 600; }
+.tl{position:relative;padding-left:20px;margin-bottom:32px}
+.tl::before{content:'';position:absolute;left:5px;top:6px;bottom:6px;width:1px;background:var(--border)}
+.tl-item{position:relative;margin-bottom:14px}
+.tl-dot{position:absolute;left:-16px;top:5px;width:7px;height:7px;border-radius:50%;background:var(--terracotta)}
+.tl-dot.green{background:var(--green)}
+.tl-dot.dim{background:var(--text-dim)}
+.tl-t{font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;font-weight:500}
+.tl-h{font-size:13px;font-weight:500;margin:2px 0;color:var(--text)}
+.tl-d{font-size:12px;color:var(--text-muted)}
+.tl-p{font-size:11px;color:var(--terracotta-light);font-weight:600;margin-top:1px}
 
-/* ── SECTION ── */
-.section-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.2px; }
+/* ── STATUS DOT ── */
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:6px}
+.dot.green{background:var(--green)}
+.dot.gold{background:var(--terracotta)}
+.dot.blue{background:var(--blue)}
 
-/* ── RESPONSIVE ── */
-@media (max-width: 800px) {
-  .sidebar { width: 60px; overflow: hidden; }
-  .sidebar a span, .sidebar-logo p, .sidebar-logo h1 { display: none; }
-  .sidebar a { justify-content: center; padding: 12px; }
-  .sidebar-section { display: none; }
-  .sidebar-footer { display: none; }
-  .main { margin-left: 60px; padding: 20px 16px; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
-  .card-grid.cols-2, .card-grid.cols-3 { grid-template-columns: 1fr; }
-}
-
-@media (max-width: 500px) {
-  .stats-grid { grid-template-columns: 1fr; }
+/* ── MOBILE ── */
+@media(max-width:800px){
+  .sidebar{width:56px;overflow:hidden}
+  .sidebar a span,.sidebar-logo p,.sidebar-logo h1,.sidebar-label,.sidebar-footer{display:none}
+  .sidebar a{justify-content:center;padding:10px;margin:0 4px}
+  .main{margin-left:56px;padding:20px 16px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .grid-3,.grid-2{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -172,21 +160,17 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); min-
 <div class="sidebar">
   <div class="sidebar-logo">
     <h1>Symbalyx</h1>
-    <p>Centre d'operations</p>
+    <p>Operations Center</p>
   </div>
-
-  <div class="sidebar-section">Navigation</div>
-  <a href="/symbalyx-ops-center/" class="active">Tableau de bord</a>
-  <a href="/symbalyx-ops-center/pages/devis.html">Generateur de devis</a>
-  <a href="/symbalyx-ops-center/pages/add-prospect.html">Ajouter un prospect</a>
-  <a href="/symbalyx-ops-center/pages/recap.html">Recapitulatif</a>
-
-  <div class="sidebar-section">Projets</div>
-  <a href="/symbalyx-ops-center/projets/talentsphere/">Talentsphere <span class="badge gold">1 800 EUR</span></a>
-
-  <div class="sidebar-section">Contenu</div>
-  <a href="/symbalyx-ops-center/pages/blog.html">Blog <span class="badge">8 articles</span></a>
-
+  <div class="sidebar-label">Navigation</div>
+  <a href="/symbalyx-ops-center/" class="active"><span>Tableau de bord</span></a>
+  <a href="/symbalyx-ops-center/pages/devis.html"><span>Generateur de devis</span></a>
+  <a href="/symbalyx-ops-center/pages/add-prospect.html"><span>Ajouter un prospect</span></a>
+  <a href="/symbalyx-ops-center/pages/recap.html"><span>Recapitulatif</span></a>
+  <div class="sidebar-label">Projets</div>
+  <a href="/symbalyx-ops-center/projets/talentsphere/"><span>Talentsphere</span><span class="badge gold">1800</span></a>
+  <div class="sidebar-label">Contenu</div>
+  <a href="/symbalyx-ops-center/pages/blog.html"><span>Blog</span><span class="badge">8</span></a>
   <div class="sidebar-spacer"></div>
   <div class="sidebar-footer">Symbalyx · Bordeaux</div>
 </div>
@@ -194,152 +178,136 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); min-
 <!-- MAIN -->
 <div class="main">
 
-  <!-- PAGE: Dashboard -->
-  <div class="page active">
+  <div class="page-header">
+    <h2>Tableau de bord</h2>
+    <p>Campagne de prospection WordPress · <span id="today"></span></p>
+    <div class="line"></div>
+  </div>
 
-    <div class="page-header">
-      <h2>Tableau de bord</h2>
-      <p>Campagne de prospection WordPress · Mise a jour en temps reel</p>
-      <div class="line"></div>
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <div class="num" style="color:var(--terracotta-light)">9</div>
+      <div class="label">Emails envoyes</div>
+      <div class="sub">aujourd'hui</div>
+      <div class="bar" style="background:var(--terracotta);width:38%"></div>
     </div>
-
-    <!-- STATS -->
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="num" style="color: var(--terracotta-light);">9</div>
-        <div class="label">Emails envoyes</div>
-        <div class="sub">Aujourd'hui</div>
-        <div class="bar terracotta"></div>
-      </div>
-      <div class="stat-card">
-        <div class="num" style="color: var(--text);">108</div>
-        <div class="label">Drafts restants</div>
-        <div class="sub">Sur 117 au total</div>
-        <div class="bar gold"></div>
-      </div>
-      <div class="stat-card">
-        <div class="num" style="color: var(--green);">0</div>
-        <div class="label">Reponses recues</div>
-        <div class="sub">Dont 0 de prospects</div>
-        <div class="bar green"></div>
-      </div>
-      <div class="stat-card">
-        <div class="num" style="color: var(--blue);">189</div>
-        <div class="label">Sites blacklistes</div>
-        <div class="sub">Deja prospectes</div>
-        <div class="bar blue"></div>
-      </div>
+    <div class="stat">
+      <div class="num" style="color:var(--text)">108</div>
+      <div class="label">Drafts restants</div>
+      <div class="sub">sur 117 au total</div>
+      <div class="bar" style="background:var(--terracotta-light);width:92%"></div>
     </div>
-
-    <!-- OUTILS -->
-    <div class="section-title">Outils</div>
-    <div class="card-grid cols-3" style="margin-bottom: 28px;">
-      <div class="card">
-        <div class="tag">Devis</div>
-        <h3>Generateur de devis</h3>
-        <p>Creez un devis personnalise avec calcul automatique, generation PDF et envoi par email.</p>
-        <a href="/symbalyx-ops-center/pages/devis.html" class="btn">Ouvrir</a>
-      </div>
-      <div class="card">
-        <div class="tag">Prospection</div>
-        <h3>Ajouter un prospect</h3>
-        <p>Ajoutez un nouveau prospect a la pipeline. Un draft est genere et integre automatiquement.</p>
-        <a href="/symbalyx-ops-center/pages/add-prospect.html" class="btn">Ouvrir</a>
-      </div>
-      <div class="card">
-        <div class="tag">Suivi</div>
-        <h3>Recapitulatif</h3>
-        <p>Historique complet des envois, reponses recues et statistiques de campagne.</p>
-        <a href="/symbalyx-ops-center/pages/recap.html" class="btn">Ouvrir</a>
-      </div>
+    <div class="stat">
+      <div class="num" style="color:var(--green)">0</div>
+      <div class="label">Reponses recues</div>
+      <div class="sub">temps moyen 48h</div>
+      <div class="bar" style="background:var(--green);width:2%"></div>
     </div>
-
-    <!-- PROJET EN COURS -->
-    <div class="section-title">Projet en cours</div>
-    <div class="card-grid cols-2" style="margin-bottom: 28px;">
-      <div class="card">
-        <div class="tag">n8n · IA</div>
-        <h3>Talentsphere — Veille emploi media</h3>
-        <p>Scraping automatise de 5 sources (ProfilCulture, TF1, Arte, France TV, WTTJ) + enrichissement GPT + email hebdomadaire automatise.</p>
-        <span class="meta">Client: Jerome Chouraqui · jerome.chouraqui@talentsphere.fr</span>
-        <span class="meta" style="color: var(--terracotta-light); font-weight: 600;">Budget: 1 800 EUR · En attente de reponse</span>
-        <a href="/symbalyx-ops-center/projets/talentsphere/" class="btn">Voir le projet</a>
-      </div>
-      <div class="card">
-        <div class="tag">WordPress</div>
-        <h3>Campagne de securite WordPress</h3>
-        <p>Prospection de TPE/PME bordelaises avec sites WordPress vulnerables. Offre audit a 29 EUR et correctifs a 99 EUR.</p>
-        <span class="meta">117 drafts generes · File d'envoi active (1/30min)</span>
-        <a href="/symbalyx-ops-center/pages/recap.html" class="btn">Voir les stats</a>
-      </div>
+    <div class="stat">
+      <div class="num" style="color:var(--blue)">189</div>
+      <div class="label">Sites blacklistes</div>
+      <div class="sub">deja prospectes</div>
+      <div class="bar" style="background:var(--blue);width:100%"></div>
     </div>
+  </div>
 
-    <!-- ACTIVITE -->
-    <div class="section-title">Activite recente</div>
-    <div class="timeline" style="margin-bottom: 28px;">
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-time">13h30 — Prochain envoi</div>
-        <div class="tl-title">draft_010.txt · Bordeauxwine</div>
-        <div class="tl-desc">Proposition securite WordPress</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot green"></div>
-        <div class="tl-time">13h00</div>
-        <div class="tl-title">jerome.chouraqui@talentsphere.fr</div>
-        <div class="tl-desc">Proposition n8n veille emploi media</div>
-        <div class="tl-price">1 800 EUR</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-time">12h30</div>
-        <div class="tl-title">contact@hoerner-ordonneau.fr</div>
-        <div class="tl-desc">Securite WordPress — Architecte Bordeaux</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-time">12h00</div>
-        <div class="tl-title">contact@lepiedaterre-cave.fr</div>
-        <div class="tl-desc">Securite WordPress — Caviste</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-time">11h30</div>
-        <div class="tl-title">contact@elitesport.fr</div>
-        <div class="tl-desc">Securite WordPress — Salle de sport</div>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-time">11h00</div>
-        <div class="tl-title">mariagedefleurs@gmail.com</div>
-        <div class="tl-desc">Securite WordPress — Fleuriste</div>
-      </div>
+  <!-- OUTILS -->
+  <div class="sec-title">Outils</div>
+  <div class="grid grid-3">
+    <div class="c">
+      <div class="tag">Devis</div>
+      <h3>Generateur de devis</h3>
+      <p>Calcul automatique des prestations, generation PDF et envoi par email. Prets a l'emploi.</p>
+      <a href="/symbalyx-ops-center/pages/devis.html" class="btn">Ouvrir</a>
     </div>
-
-    <!-- SYSTEME -->
-    <div class="section-title">Etat du systeme</div>
-    <div class="card-grid cols-2" style="margin-bottom: 40px;">
-      <div class="card">
-        <h3><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-right:8px;"></span>Envoi d'emails</h3>
-        <p>Cron actif · 1 email/30min · 11h-18h30 (CEST) · Jours ouverts</p>
-      </div>
-      <div class="card">
-        <h3><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-right:8px;"></span>Monitoring reponses</h3>
-        <p>Scan IMAP · Toutes les 30 min · Detection des reponses prospects</p>
-      </div>
-      <div class="card">
-        <h3><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-right:8px;"></span>Prospection nocturne</h3>
-        <p>Recherche + scan + drafts · De 20h a 6h · Automatique</p>
-      </div>
-      <div class="card">
-        <h3><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-right:8px;"></span>Rapport matinal</h3>
-        <p>Resume quotidien · Livre a 8h · Bilan de la nuit + stats</p>
-      </div>
+    <div class="c">
+      <div class="tag">Prospection</div>
+      <h3>Ajouter un prospect</h3>
+      <p>Ajoutez un nouveau prospect. Draft automatique integre dans la file d'envoi.</p>
+      <a href="/symbalyx-ops-center/pages/add-prospect.html" class="btn">Ouvrir</a>
     </div>
+    <div class="c">
+      <div class="tag">Suivi</div>
+      <h3>Recapitulatif</h3>
+      <p>Historique des envois, reponses recues et statistiques detaillees de campagne.</p>
+      <a href="/symbalyx-ops-center/pages/recap.html" class="btn">Ouvrir</a>
+    </div>
+  </div>
 
+  <!-- PROJETS -->
+  <div class="sec-title">Projet en cours</div>
+  <div class="grid grid-2">
+    <div class="c">
+      <div class="tag">n8n · IA</div>
+      <h3>Talentsphere</h3>
+      <p>Scraping automatise de 5 sources medias (ProfilCulture, TF1, Arte, France TV, WTTJ) + enrichissement GPT + email hebdomadaire.</p>
+      <span class="meta">Jerome Chouraqui</span>
+      <span class="meta price">1 800 EUR · En attente</span>
+      <a href="/symbalyx-ops-center/projets/talentsphere/" class="btn">Voir</a>
+    </div>
+    <div class="c">
+      <div class="tag">WordPress</div>
+      <h3>Campagne securite WordPress</h3>
+      <p>Prospection de TPE/PME bordelaises avec sites WordPress vulnerables. Offres: audit 29 EUR, correctifs 99 EUR.</p>
+      <span class="meta">117 drafts · File active (1/30min)</span>
+      <a href="/symbalyx-ops-center/pages/recap.html" class="btn">Stats</a>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="sec-title">Activite recente</div>
+  <div class="tl">
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-t">13h30 · Prochain envoi</div>
+      <div class="tl-h">draft_010 · Bordeauxwine</div>
+      <div class="tl-d">Proposition securite WordPress</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot green"></div>
+      <div class="tl-t">13h00</div>
+      <div class="tl-h">Talentsphere · Jerome Chouraqui</div>
+      <div class="tl-d">Proposition n8n veille emploi media</div>
+      <div class="tl-p">1 800 EUR</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot dim"></div>
+      <div class="tl-t">12h30</div>
+      <div class="tl-h">contact@hoerner-ordonneau.fr</div>
+      <div class="tl-d">Architecte Bordeaux · Securite WP</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot dim"></div>
+      <div class="tl-t">12h00</div>
+      <div class="tl-h">contact@lepiedaterre-cave.fr</div>
+      <div class="tl-d">Caviste · Securite WP</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot dim"></div>
+      <div class="tl-t">11h30</div>
+      <div class="tl-h">contact@elitesport.fr</div>
+      <div class="tl-d">Salle de sport · Securite WP</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot dim"></div>
+      <div class="tl-t">11h00</div>
+      <div class="tl-h">mariagedefleurs@gmail.com</div>
+      <div class="tl-d">Fleuriste · Securite WP</div>
+    </div>
+  </div>
+
+  <!-- SYSTEME -->
+  <div class="sec-title">Etat du systeme</div>
+  <div class="grid grid-2" style="margin-bottom:0">
+    <div class="c"><h3><span class="dot green"></span>Envoi d'emails</h3><p>Cron · 1/30min · 11h-18h30 · Jours ouverts</p></div>
+    <div class="c"><h3><span class="dot green"></span>Monitoring reponses</h3><p>Scan IMAP · 30min · Detection reponses prospects</p></div>
+    <div class="c"><h3><span class="dot green"></span>Prospection nocturne</h3><p>20h-6h · Recherche + scan + drafts</p></div>
+    <div class="c"><h3><span class="dot green"></span>Rapport matinal</h3><p>8h chaque jour · Bilan complet</p></div>
   </div>
 
 </div><!-- /main -->
 </div><!-- /app -->
+<script>document.getElementById('today').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',year:'numeric',month:'long',day:'numeric'})</script>
 </body>
 </html>
