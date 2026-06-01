@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Merci — Symbalyx</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0f; color: #e0e0e0; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+  .card { background: #13131a; border-radius: 20px; padding: 40px 32px; border: 1px solid #1e1e2a; max-width: 480px; width: 100%; text-align: center; }
+  .icon { font-size: 56px; margin-bottom: 16px; }
+  h1 { font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  p { font-size: 15px; color: #888; line-height: 1.6; margin-bottom: 24px; }
+  .btn { display: inline-block; background: #ff6b35; color: #fff; text-decoration: none; padding: 14px 32px; border-radius: 12px; font-weight: 700; font-size: 15px; transition: all 0.15s; }
+  .btn:active { transform: scale(0.97); opacity: 0.8; }
+  .btn-secondary { background: transparent; border: 1px solid #1e1e2a; color: #888; margin-left: 8px; }
+  .checklist { text-align: left; margin: 24px 0; background: #0d0d14; border-radius: 12px; padding: 20px; border: 1px solid #1a1a28; }
+  .checklist h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: #ff6b35; margin-bottom: 12px; }
+  .checklist li { list-style: none; padding: 6px 0; font-size: 13px; color: #aaa; display: flex; align-items: center; gap: 8px; }
+  .checklist li::before { content: "✅"; font-size: 14px; }
+  .footer { font-size: 12px; color: #555; margin-top: 24px; }
+  strong { color: #fff; }
+  @media (prefers-color-scheme: light) {
+    body { background: #f5f5f0; color: #222; }
+    .card { background: #fff; border-color: #e0ddd5; }
+    h1 { color: #000; }
+    p { color: #666; }
+    .btn-secondary { border-color: #e0ddd5; color: #666; }
+    .checklist { background: #f8f8f4; border-color: #e0ddd5; }
+    .checklist li { color: #555; }
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="icon">🎉</div>
+  <h1>Guide envoyé !</h1>
+  <p>Votre guide SEO gratuit a été envoyé à votre adresse email.<br>Vérifiez votre boîte de réception (et les spams).</p>
+
+  <div class="checklist">
+    <h3>Les prochaines étapes recommandées</h3>
+    <ul>
+      <li>Lisez le guide — 5 minutes pour comprendre les bases</li>
+      <li>Appliquez les 3 correctifs rapides ce week-end</li>
+      <li>Bloquez 30 min pour la checklist complète</li>
+    </ul>
+  </div>
+
+  <p style="font-size:13px;color:#666">
+    Vous avez un site WordPress ?<br>
+    On peut auditer gratuitement votre site et vous remettre un rapport personnalisé en 15 minutes.
+  </p>
+
+  <a href="https://symbalyx.github.io/symbalyx-leads/audit.html" class="btn">Audit Gratuit</a>
+  <br><br>
+  <a href="https://symbalyx.github.io/symbalyx-leads/services.html" class="btn btn-secondary">Voir nos services →</a>
+
+  <div class="footer">
+    Arsène · Symbalyx — Studio web & automatisation · Bordeaux<br>
+    arsene@symbalyx.com
+  </div>
+</div>
+</body>
+</html>
