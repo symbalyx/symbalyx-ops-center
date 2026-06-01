@@ -223,6 +223,10 @@
     <span class="icon">📋</span> Pipeline
     <span class="badge blue">2/113</span>
   </a>
+  <a href="#" class="nav-item" data-page="sales" onclick="showPage('sales',this)">
+    <span class="icon">💰</span> Trackeur Ventes
+    <span class="badge gold" id="salesBadge">€0</span>
+  </a>
   <a href="#" class="nav-item" data-page="services" onclick="showPage('services',this)">
     <span class="icon">🛠️</span> Services & Tarifs
   </a>
@@ -520,6 +524,74 @@
   </div>
 </div>
 
+<!-- ═══════════════════════ SALES TRACKER ═══════════════════════ -->
+<div class="page" id="page-sales">
+  <div class="page-header">
+    <h2>💰 Trackeur de Ventes</h2>
+    <p>Clique quand tu encaisses — le compteur 500€ se met à jour en direct</p>
+  </div>
+
+  <div class="stats" style="grid-template-columns:1fr 1fr 1fr">
+    <div class="stat"><div class="num gold" id="totalEuros">€0</div><div class="label">Encaissé</div></div>
+    <div class="stat"><div class="num" id="remainingEuros">€500</div><div class="label">Restant</div></div>
+    <div class="stat"><div class="num blue" id="saleCount">0</div><div class="label">Ventes</div></div>
+  </div>
+
+  <div class="card gold" style="margin-bottom:16px">
+    <div class="card-header"><span class="emoji">📊</span> Progression vers 500€</div>
+    <div class="progress-wrap" style="height:16px">
+      <div class="progress-bar" id="goalProgress" style="width:0%"></div>
+    </div>
+    <div class="progress-label" style="margin-top:4px">
+      <span id="progressLabel">0% — €0 encaissé</span>
+      <span>🎯 €500</span>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
+    <button onclick="addSale(99, 'Correctif Express')" style="background:var(--card);border:1px solid var(--green-dim);border-radius:12px;padding:14px;cursor:pointer;transition:all 0.12s;text-align:center" ontouchstart="this.style.transform='scale(0.97)'" ontouchend="this.style.transform='scale(1)'">
+      <div style="font-size:22px;font-weight:800;color:var(--green)">+99€</div>
+      <div style="font-size:11px;color:var(--dim)">Correctif Express</div>
+    </button>
+    <button onclick="addSale(29, 'Audit Sécurité')" style="background:var(--card);border:1px solid var(--blue-dim);border-radius:12px;padding:14px;cursor:pointer;transition:all 0.12s;text-align:center" ontouchstart="this.style.transform='scale(0.97)'" ontouchend="this.style.transform='scale(1)'">
+      <div style="font-size:22px;font-weight:800;color:var(--blue)">+29€</div>
+      <div style="font-size:11px;color:var(--dim)">Audit Sécurité</div>
+    </button>
+    <button onclick="addSale(450, 'Site Starter')" style="background:var(--card);border:1px solid var(--gold-dim);border-radius:12px;padding:14px;cursor:pointer;text-align:center" ontouchstart="this.style.transform='scale(0.97)'" ontouchend="this.style.transform='scale(1)'">
+      <div style="font-size:22px;font-weight:800;color:var(--gold)">+450€</div>
+      <div style="font-size:11px;color:var(--dim)">Site Starter</div>
+    </button>
+    <button onclick="addSale(99, 'Maintenance (1mois)')" style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;cursor:pointer;text-align:center" ontouchstart="this.style.transform='scale(0.97)'" ontouchend="this.style.transform='scale(1)'">
+      <div style="font-size:22px;font-weight:800;color:#fff">+99€</div>
+      <div style="font-size:11px;color:var(--dim)">Maintenance 1 mois</div>
+    </button>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="emoji">📝</span> Ajouter une vente personnalisée</div>
+    <div style="display:flex;gap:8px">
+      <input type="number" id="customAmount" placeholder="Montant €" style="flex:1;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:#090914;color:#fff;font-size:14px;outline:none;min-width:0">
+      <input type="text" id="customLabel" placeholder="Ex: Correctif Mr Dupont" style="flex:1;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:#090914;color:#fff;font-size:14px;outline:none;min-width:0">
+      <button onclick="addCustomSale()" style="padding:10px 16px;border-radius:10px;border:none;background:var(--gold);color:#fff;font-weight:700;cursor:pointer;white-space:nowrap">Ajouter</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="emoji">📋</span> Historique des ventes <span id="historyCount" style="font-weight:400;color:var(--muted)">(0 vente)</span></div>
+    <div id="salesHistory">
+      <div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">
+        Aucune vente enregistrée pour l'instant.<br>
+        Tape sur un bouton ci-dessus quand tu décroches ton premier client ! 🚀
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:8px">
+    <button onclick="resetSales()" style="flex:1;padding:10px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:12px">🔄 Réinitialiser les ventes</button>
+    <button onclick="exportSales()" style="flex:1;padding:10px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:12px">📤 Exporter</button>
+  </div>
+</div>
+
 <!-- ═══════════════════════ SERVICES ═══════════════════════ -->
 <div class="page" id="page-services">
   <div class="page-header">
@@ -765,6 +837,70 @@ document.getElementById('prospectSearch').addEventListener('input', function() {
   );
   renderProspects(filtered);
 });
+
+// ─── SALES TRACKER ───
+const GOAL = 500;
+let sales = JSON.parse(localStorage.getItem('symbalyx_sales') || '[]');
+
+function updateSalesUI() {
+  const total = sales.reduce((sum, s) => sum + s.amount, 0);
+  const pct = Math.min(100, Math.round(total / GOAL * 100));
+  const remaining = Math.max(0, GOAL - total);
+
+  document.getElementById('totalEuros').textContent = '€' + total;
+  document.getElementById('remainingEuros').textContent = '€' + remaining;
+  document.getElementById('saleCount').textContent = sales.length;
+  document.getElementById('goalProgress').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = pct + '% — €' + total + ' encaissé';
+  document.getElementById('salesBadge').textContent = '€' + total;
+  document.getElementById('historyCount').textContent = '(' + sales.length + ' vente' + (sales.length > 1 ? 's' : '') + ')';
+
+  const history = document.getElementById('salesHistory');
+  if (sales.length === 0) {
+    history.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">Aucune vente enregistrée pour l instant.<br>Tape sur un bouton ci-dessus quand tu décroches ton premier client ! 🚀</div>';
+  } else {
+    history.innerHTML = sales.slice().reverse().map(s => {
+      const date = new Date(s.at);
+      const dateStr = date.toLocaleDateString('fr-FR', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' });
+      return '<div class="prospect" style="border:none;padding:8px 0">' +
+        '<div class="info"><div class="name" style="font-size:14px">+' + s.amount + '€ <span style="font-weight:400;color:var(--dim)">— ' + s.label + '</span></div>' +
+        '<div style="font-size:11px;color:var(--muted)">' + dateStr + '</div></div></div>';
+    }).join('');
+  }
+}
+
+function addSale(amount, label) {
+  sales.push({ amount, label, at: new Date().toISOString() });
+  localStorage.setItem('symbalyx_sales', JSON.stringify(sales));
+  updateSalesUI();
+  // Haptic feedback mental — tu sens la progression
+}
+
+function addCustomSale() {
+  const amt = parseInt(document.getElementById('customAmount').value);
+  const lbl = document.getElementById('customLabel').value.trim();
+  if (!amt || amt <= 0) { alert('Entre un montant valide'); return; }
+  addSale(amt, lbl || 'Vente personnalisée');
+  document.getElementById('customAmount').value = '';
+  document.getElementById('customLabel').value = '';
+}
+
+function resetSales() {
+  if (confirm('Réinitialiser toutes les ventes ?')) {
+    sales = [];
+    localStorage.setItem('symbalyx_sales', JSON.stringify(sales));
+    updateSalesUI();
+  }
+}
+
+function exportSales() {
+  const text = sales.map(s => s.amount + '€ — ' + s.label + ' (' + new Date(s.at).toLocaleDateString('fr-FR') + ')').join('\n');
+  const total = sales.reduce((sum, s) => sum + s.amount, 0);
+  alert('Total: €' + total + '\n\n' + text + '\n\n(Copie manuelle pour l instant)');
+}
+
+// Init on load
+updateSalesUI();
 </script>
 
 </body>
