@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automatiser sa prospection : quel outil choisir ? — Symbalyx Studio Web</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0f; color: #e0e0e0; line-height: 1.7; }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 20px 16px; }
+  h1 { font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 8px; line-height: 1.3; }
+  h2 { font-size: 18px; font-weight: 700; color: #ff6b35; margin: 28px 0 10px; }
+  h3 { font-size: 15px; font-weight: 600; color: #ddd; margin: 20px 0 8px; }
+  p { font-size: 14px; color: #ccc; margin-bottom: 12px; }
+  ul { margin: 8px 0 16px 20px; }
+  li { font-size: 14px; color: #ccc; margin-bottom: 4px; }
+  strong { color: #fff; }
+  em { color: #aaa; }
+  a { color: #ff6b35; }
+  pre { background: #0d0d14; border: 1px solid #1a1a28; border-radius: 10px; padding: 14px; overflow-x: auto; margin: 12px 0; }
+  code { font-size: 13px; color: #e0e0e0; }
+  .back { display: inline-block; color: #ff6b35; text-decoration: none; font-size: 13px; font-weight: 600; margin-bottom: 20px; }
+  .back:hover { text-decoration: underline; }
+  hr { border: none; border-top: 1px solid #1e1e2a; margin: 24px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+  td { padding: 8px 12px; border: 1px solid #1e1e2a; font-size: 13px; color: #ccc; }
+  @media (prefers-color-scheme: light) {
+    body { background: #f5f5f0; }
+    h1 { color: #000; }
+    h3 { color: #333; }
+    p, li, td { color: #444; }
+    strong { color: #000; }
+    pre { background: #f8f8f4; border-color: #e0ddd5; }
+    hr { border-color: #e0ddd5; }
+    td { border-color: #e0ddd5; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="/symbalyx-leads/blog.html" class="back">← Blog</a>
+  <h1>Automatiser sa prospection : quel outil choisir ?</h1>
+  <p>Vous passez des heures chaque semaine à envoyer des emails, relancer des prospects, noter des infos dans un tableau… Et combien de rendez-vous décrochez-vous vraiment ?</p>
+<h2>Pourquoi automatiser ?</h2>
+<p>Un commercial ne passe que 30% de son temps à vendre. Le reste ? De l'administratif. Automatiser, c'est :</p>
+<ul>
+<li>Envoyer des centaines d'emails sans effort répétitif</li>
+<li>Planifier des relances automatiques (J+3, J+7, J+14)</li>
+<li>Suivre les ouvertures et réponses</li>
+<li>Ne plus jamais oublier un prospect</li>
+</ul>
+<h2>Les outils du marché</h2>
+<p><strong>Lemlist</strong> — 30-60€/mois. Personnalisation visuelle des emails. Idéal pour les campagnes soignées.</p>
+<p><strong>Mailshake</strong> — 25€/mois. Simple, efficace, parfait pour débuter. Inclus SMS et appels.</p>
+<p><strong>Instantly</strong> — 30$/mois. Le spécialiste de la délivrabilité. Chauffe vos domaines pour éviter les spams.</p>
+<p><strong>PhantomBuster</strong> — 25€/mois. Automatisation LinkedIn : extraction de leads, messages, scraping.</p>
+<p><strong>Apify</strong> — 5$/mois. Web scraping : extrait des données de Google Maps, annuaires, sites web.</p>
+<h2>La méthode du pauvre : script + cron + SMTP</h2>
+<p>Pas de budget SaaS ? Un simple script shell qui lit une liste de prospects, génère un email, et l'envoie via SMTP. Programmée avec cron (gratuit, présent sur tous les serveurs Linux). <strong>Coût : quelques centimes d'hébergement.</strong></p>
+<p>C'est exactement l'approche de Symbalyx : pas d'abonnement, pas de dépendance, contrôle total.</p>
+<h2>Quoi automatiser vs quoi garder humain</h2>
+<p><strong>Automatisé :</strong> envoi, relance, suivi, logging, scraping de données publiques.</p>
+<p><strong>Humain :</strong> rédaction du message, choix des prospects, réponse aux retours, négociation.</p>
+<p>Un prospect sent immédiatement un message générique. La machine libère du temps pour que vous rédigiez de vrais bons messages.</p>
+<h2>Les pièges</h2>
+<ul>
+<li>**Délivrabilité** : 200 emails depuis Gmail en une heure = spam. Chauffer son domaine, respecter les limites.</li>
+<li>**SPF/DKIM/DMARC** : Sans ces enregistrements DNS, votre taux de délivrabilité chute à 20-30%.</li>
+<li>**RGPD** : Lien de désabonnement, identité claire, pas de fichiers achetés.</li>
+</ul>
+<h2>Conclusion</h2>
+<p>Commencez petit : testez sur 50 prospects, mesurez, ajustez, puis scalez. Pas besoin de 500€/mois pour commencer.</p>
+<p><em>Symbalyx propose des briques d'automatisation légères pour les TPE et indépendants. Contactez-nous pour en savoir plus : arsene@symbalyx.com</em></p>
+
+  <hr>
+  <p style="font-size:12px;color:#555;text-align:center">
+    Symbalyx — Studio web & automatisation · Bordeaux · <a href="/symbalyx-leads/">Accueil</a>
+  </p>
+</div>
+</body>
+</html>
