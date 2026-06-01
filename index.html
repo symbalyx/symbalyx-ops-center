@@ -224,7 +224,7 @@
     <span class="badge blue">2/113</span>
   </a>
   <a href="#" class="nav-item" data-page="sales" onclick="showPage('sales',this)">
-    <span class="icon">💰</span> Trackeur Ventes
+    <span class="icon">💰</span> Ventes & Réponses
     <span class="badge gold" id="salesBadge">€0</span>
   </a>
   <a href="#" class="nav-item" data-page="services" onclick="showPage('services',this)">
@@ -401,71 +401,101 @@
   </div>
 
   <div class="card">
-    <div class="card-header"><span class="emoji">🛠️</span> Script — Artisans & Commerces (plombier, électricien, boulanger...)</div>
+    <div class="card-header"><span class="emoji">🛠️</span> Script — Site WordPress avec failles (scénario typique)</div>
     <div class="script">
+      <div class="meta"><span class="tag">🎯 Correctif 99€</span><span class="time">3 min d'appel</span></div>
       <div class="lines">
-        <span class="step">🎯 Objectif : Correctif Express 99€</span>
-        <span class="you">Vous :</span> "<span class="them">Bonjour [Nom], c'est Arsène de Symbalyx. Je suis passé sur votre site tout à l'heure, je suis tombé dessus en cherchant [service] sur Bordeaux. Je peux vous montrer un truc qui cloche en 30 secondes ?</span>"
-        <div class="note">→ Il dit oui 80% du temps si c'est bien enchaîné</div>
-        <span class="step">🔍 Phase démo (30 sec)</span>
-        <span class="you">Vous :</span> "<span class="them">Tenez, regardez — quand on arrive sur votre site sur mobile, [problème spécifique]. Et puis Google affiche [observation]. Vous voyez ce que je veux dire ?</span>"
-        <span class="step">💰 Proposition</span>
-        <span class="you">Vous :</span> "<span class="them">Je peux corriger ça aujourd'hui — c'est 99€, je vous envoie la correction dans la journée. Et si le site a d'autres problèmes, on fait un audit rapide offert. Ça marche ?</span>"
-        <span class="step">⏰ Si pas disponible</span>
-        <span class="you">Vous :</span> "<span class="them">Pas de souci, je vous envoie le diagnostic par SMS comme ça vous regardez. Et je repasse dans 2 jours ?</span>"
-        <div class="note">→ Envoie https://symbalyx.github.io/symbalyx-leads/correction.html par SMS</div>
+        <span class="step">1️⃣ OUVERTURE (5 sec)</span>
+        <span class="you">Vous :</span> "<span class="them">Bonjour [Nom], c'est Arsène de Symbalyx. Je suis passé sur votre site WordPress, j'ai vu 3 failles de sécurité. Je peux vous les montrer en 30 secondes ?</span>"
+        <div class="note">→ Taux d'acceptation ~80%</div>
+        <span class="step">2️⃣ DÉMO — Les erreurs concrètes</span>
+        <span class="you">Vous :</span> "<span class="them">J'ai noté 3 choses :</span>
+        <span class="them"><strong>1. Vos identifiants admin fuient</strong> — en tapant /?author=1 sur votre site, je vois le login admin. Un hacker peut bruteforcer votre mot de passe. Avec un robot, c'est 1000 tentatives/minute. <span style="color:var(--red)">Risque : piratage total du site.</span></span>
+        <span class="them"><strong>2. Votre debug.log est exposé</strong> — dans /wp-content/debug.log, je vois les erreurs PHP de votre site. Ça donne le chemin du serveur, la version de PHP, des tentatives de connexion SQL. <span style="color:var(--red)">Risque : un hacker peut cartographier votre infra.</span></span>
+        <span class="them"><strong>3. Votre version WP est visible</strong> — les hackers savent exactement quelles failles CVE tester. Votre version a [X] failles connues. <span style="color:var(--red)">Risque : infection par malware, site blacklisté Google.</span></span>"
+        <span class="step">3️⃣ VENTE (15 sec)</span>
+        <span class="you">Vous :</span> "<span class="them">Je corrige les 3 failles aujourd'hui pour 99€, et je vous offre un audit complet de votre site. Ça vous va ?</span>"
+        <span class="note">→ Si oui → encaisses 99€. Si non → envoie correction.html par SMS.</span>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-header"><span class="emoji">🍽️</span> Script — Restaurants, Bars, Hôtels</div>
+    <div class="card-header"><span class="emoji">📱</span> Script — Site pas adapté mobile (perte de clients)</div>
     <div class="script">
+      <div class="meta"><span class="tag">🎯 Pack Présence 149€/mois</span><span class="time">2 min</span></div>
       <div class="lines">
-        <span class="step">🎯 Objectif : Pack Présence 149€/mois</span>
-        <span class="you">Vous :</span> "<span class="them">Bonjour [Nom], Arsène de Symbalyx. J'ai vu votre resto sur Google — belle carte ! Par contre votre site ne permet pas de réserver en ligne, c'est voulu ?</span>"
-        <span class="note">→ Accroche : la perte de chiffre d'affaires (réservations)</span>
-        <span class="step">💰 Proposition</span>
-        <span class="you">Vous :</span> "<span class="them">On a un pack à 149€/mois qui inclut le site + réservation en ligne + visibilité Google. Je peux vous montrer le template en 5 min si vous avez un moment.</span>"
+        <span class="step">1️⃣ OUVERTURE</span>
+        <span class="you">Vous :</span> "<span class="them">Bonjour [Nom], Arsène de Symbalyx. J'ai regardé votre site sur mon téléphone — c'est tout petit, je dois zoomer pour lire. Vous saviez que 68% de vos visiteurs passent par mobile ?</span>"
+        <span class="step">2️⃣ IMPACT BUSINESS</span>
+        <span class="them"><strong>L'erreur :</strong> Pas de balise viewport + design desktop-only. Sur mobile, le texte est illisible, les boutons impossibles à cliquer. <span style="color:var(--red)">Impact : vous perdez 7 clients sur 10 qui arrivent par Google.</span></span>
+        <span class="them"><strong>Bonus :</strong> Google pénalise les sites non-mobile dans ses résultats. Vous êtes peut-être en page 3 alors que vous pourriez être en page 1.</span>
+        <span class="step">3️⃣ VENTE</span>
+        <span class="you">Vous :</span> "<span class="them">Je peux vous rendre votre site 100% mobile-friendly en 48h, avec hébergement et maintenance. C'est 149€/mois, tout compris. Je vous montre un prototype ?</span>"
       </div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-header"><span class="emoji">💼</span> Script — Professions libérales (avocat, architecte, coach, kiné)</div>
+    <div class="card-header"><span class="emoji">🔒</span> Script — Pas de SSL / Site en HTTP</div>
     <div class="script">
+      <div class="meta"><span class="tag">🎯 Correctif Express 99€</span><span class="time">2 min</span></div>
       <div class="lines">
-        <span class="step">🎯 Objectif : Site Starter 450€ + Maintenance 99€/mois</span>
-        <span class="you">Vous :</span> "<span class="them">Bonjour [Nom], Arsène de Symbalyx. Je cherchais un [profession] sur Bordeaux et je suis tombé sur votre site. Vous avez un blog ou des articles ? Parce que Google ne vous remonte pas sur [mot-clé].</span>"
-        <span class="step">💰 Proposition</span>
-        <span class="you">Vous :</span> "<span class="them">Je peux vous faire un site vitrine optimisé SEO, avec un blog pour vos articles, le tout pour 450€ + 99€/mois de maintenance et hébergement. Ça vous intéresse qu'on en parle 10 min ?</span>"
+        <span class="step">1️⃣ OUVERTURE</span>
+        <span class="you">Vous :</span> "<span class="them">Bonjour [Nom], Arsène de Symbalyx. Votre site n'est pas en HTTPS — quand un client arrive, Chrome affiche '⚠️ Pas sécurisé'. Vous avez remarqué ?</span>"
+        <span class="note">→ Ils ont TOUS remarqué mais ne savent pas quoi faire</span>
+        <span class="step">2️⃣ IMPACT BUSINESS</span>
+        <span class="them"><strong>L'erreur :</strong> Pas de certificat SSL. Les données entre le client et votre site circulent en clair. <span style="color:var(--red)">Impact : tout formulaire de contact envoie les données sans chiffrement.</span></span>
+        <span class="them"><strong>Conséquence SEO :</strong> Google affiche vos pages en <strong>⚠️ Non sécurisé</strong> dans le navigateur. Le taux de rebond augmente de 30%. Et Google classe les sites HTTPS mieux que les HTTP.</span>
+        <span class="step">3️⃣ VENTE</span>
+        <span class="you">Vous :</span> "<span class="them">J'installe le certificat SSL + je configure la redirection automatique. 99€, fait dans la journée. Vous voulez que je le lance ?</span>"
       </div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-header"><span class="emoji">🏪</span> Script — Site WordPress avec failles de sécurité</div>
+    <div class="card-header"><span class="emoji">🐌</span> Script — Site lent (temps de chargement > 3s)</div>
     <div class="script">
+      <div class="meta"><span class="tag">🎯 Audit + Correctif 99€</span><span class="time">2 min</span></div>
       <div class="lines">
-        <span class="step">🎯 Objectif : Correctif Express 99€ + Audit sécurité gratuit</span>
-        <span class="you">Vous :</span> "<span class="them">Bonjour [Nom], Arsène de Symbalyx — on est spécialisé WordPress à Bordeaux. Je suis passé sur votre site et j'ai vu que votre version WP n'est plus à jour, ce qui crée des failles de sécurité. Vous avez quelqu'un qui s'en occupe ?</span>"
-        <span class="note">→ Leur faire peur un peu (piratage = site down, perte de clients)</span>
-        <span class="step">💰 Proposition</span>
-        <span class="you">Vous :</span> "<span class="them">Je peux corriger les failles critiques aujourd'hui — 99€, vous dormez tranquille. Et on en profite pour faire un audit complet offert. Je vous envoie le rapport dans 2h.</span>"
-        <span class="step">📱 SMS à envoyer après appel</span>
-        <div class="note">"[Nom], voici le lien vers votre diagnostic : https://symbalyx.github.io/symbalyx-leads/correction.html — je vous rappelle [jour] pour en parler. Arsène — Symbalyx"</div>
+        <span class="step">1️⃣ OUVERTURE</span>
+        <span class="you">Vous :</span> "<span class="them">Bonjour [Nom], Arsène de Symbalyx. J'ai testé la vitesse de votre site — il met [X] secondes à charger. Google dit qu'au delà de 3s, vous perdez 53% de vos visiteurs.</span>"
+        <span class="step">2️⃣ DIAGNOSTIC</span>
+        <span class="them"><strong>Les causes possibles :</strong> Images non optimisées (souvent la #1), trop de plugins WP, pas de cache navigateur, hébergement mutualisé saturé.</span>
+        <span class="them"><strong>Impact business :</strong> 53% des visiteurs partent avant de voir votre site. Si vous avez 1000 visites/mois, ça fait 530 clients potentiels perdus.</span>
+        <span class="step">3️⃣ VENTE</span>
+        <span class="you">Vous :</span> "<span class="them">Je fais un audit de performance complet, j'identifie les 3 causes principales, et je les corrige. 99€, livré en 24h. Je commence ?</span>"
       </div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-header"><span class="emoji">📱</span> Script — Relance SMS après appel</div>
+    <div class="card-header"><span class="emoji">📉</span> Script — Pas de SEO (meta descriptions, titres, structure)</div>
+    <div class="script">
+      <div class="meta"><span class="tag">🎯 Site Starter 450€</span><span class="time">2 min</span></div>
+      <div class="lines">
+        <span class="step">1️⃣ OUVERTURE</span>
+        <span class="you">Vous :</span> "<span class="them">Bonjour [Nom], Arsène de Symbalyx. J'ai cherché [mot-clé] sur Google pour trouver votre site — vous étiez en page [X]. Vous voulez qu'on regarde pourquoi ?</span>"
+        <span class="step">2️⃣ DIAGNOSTIC</span>
+        <span class="them"><strong>Erreurs SEO fréquentes :</strong></span>
+        <span class="them">• Pas de meta description → Google affiche du texte au hasard dans les résultats → <span style="color:var(--red)">-30% de clics</span></span>
+        <span class="them">• Titres de page non optimisés → Google ne comprend pas le sujet de vos pages</span>
+        <span class="them">• Pas de balises H1/H2 → structure invisible pour Google</span>
+        <span class="them">• Images sans balise alt → vos produits ne sortent pas dans Google Images</span>
+        <span class="step">3️⃣ VENTE</span>
+        <span class="you">Vous :</span> "<span class="them">Je peux vous refaire un site vitrine optimisé SEO, responsive, avec blog. 450€, livré en 7 jours. Les clients vous trouveront naturellement sur Google.</span>"
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span class="emoji">📱</span> Script SMS à envoyer après appel</div>
     <div class="script">
       <div class="lines">
-        <span class="step">📱 SMS J+1</span>
-        <div class="note">"[Nom], c'est Arsène de Symbalyx — suite à notre échange, voici le lien pour voir les points d'amélioration de votre site : https://symbalyx.github.io/symbalyx-leads/correction.html. Bonne journée !"</div>
-        <span class="step">📱 SMS J+3 si pas de réponse</span>
-        <div class="note">"[Nom], petit message pour vous rappeler que le diagnostic de votre site est prêt ici : https://symbalyx.github.io/symbalyx-leads/correction.html. Je reste disponible si vous voulez qu'on en parle 5 min."</div>
+        <span class="step">📱 SMS post-appel (direct)</span>
+        <div class="note">"[Nom], voici le diagnostic de votre site avec les failles détectées : https://symbalyx.github.io/symbalyx-ops-center/correction.html — je vous rappelle [jour] pour en parler. Arsène — Symbalyx"</div>
+        <span class="step">📱 Relance J+1</span>
+        <div class="note">"[Nom], c'est Arsène. Suite à notre échange, j'ai préparé les correctifs pour votre site. Je peux les appliquer aujourd'hui pour 99€. Vous voulez que je lance ?"</div>
       </div>
     </div>
   </div>
@@ -527,8 +557,8 @@
 <!-- ═══════════════════════ SALES TRACKER ═══════════════════════ -->
 <div class="page" id="page-sales">
   <div class="page-header">
-    <h2>💰 Trackeur de Ventes</h2>
-    <p>Clique quand tu encaisses — le compteur 500€ se met à jour en direct</p>
+    <h2>💰 Ventes & Réponses</h2>
+    <p>Tracke tes ventes en direct + suivi des réponses prospects en temps réel</p>
   </div>
 
   <div class="stats" style="grid-template-columns:1fr 1fr 1fr">
@@ -574,6 +604,43 @@
       <input type="text" id="customLabel" placeholder="Ex: Correctif Mr Dupont" style="flex:1;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:#090914;color:#fff;font-size:14px;outline:none;min-width:0">
       <button onclick="addCustomSale()" style="padding:10px 16px;border-radius:10px;border:none;background:var(--gold);color:#fff;font-weight:700;cursor:pointer;white-space:nowrap">Ajouter</button>
     </div>
+  </div>
+
+  <div class="card" style="border-color:var(--blue-dim)">
+    <div class="card-header"><span class="emoji">📬</span> Réponses prospects en direct</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+      <div style="flex:1;background:#090914;border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;min-width:100px">
+        <div style="font-size:11px;color:var(--dim)">📬 Boîte Zoho</div>
+        <div style="font-size:13px;font-weight:600;color:var(--green);margin-top:2px">✅ Monitoring actif</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">Vérif. toutes les 30 min</div>
+      </div>
+      <div style="flex:1;background:#090914;border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;min-width:100px">
+        <div style="font-size:11px;color:var(--dim)">🔔 Notifications</div>
+        <div style="font-size:13px;font-weight:600;color:var(--gold);margin-top:2px">Arrivent ici sur Telegram</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">En temps réel</div>
+      </div>
+      <div style="flex:1;background:#090914;border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;min-width:100px">
+        <div style="font-size:11px;color:var(--dim)">📧 Dernière vérif</div>
+        <div style="font-size:13px;font-weight:600;color:#fff;margin-top:2px" id="lastImapCheck">—</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">Aucune réponse pour l'instant</div>
+      </div>
+    </div>
+    <div style="background:#090914;border-radius:10px;padding:14px;margin-top:4px">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite"></span>
+        <span style="font-size:12px;color:var(--dim)">Système de monitoring actif — dès qu'un prospect répond "intéressé", "combien", "devis", "stop", tu reçois une notification ici même</span>
+      </div>
+    </div>
+    <style>
+      @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    </style>
+    <script>
+      function updateImapTime() {
+        document.getElementById('lastImapCheck').textContent = new Date().toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'}) + ' (' + new Date().toLocaleDateString('fr-FR', {day:'numeric',month:'short'}) + ')';
+      }
+      updateImapTime();
+      setInterval(updateImapTime, 60000);
+    </script>
   </div>
 
   <div class="card">
